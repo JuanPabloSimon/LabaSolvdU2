@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MusicHall {
+    private int musicHallID;
     private String name;
-    private int id;
     private int scenariosAmount;
     private ArrayList<Employee> employees;
-    private ArrayList<Scenarios> scenarios;
+    private ArrayList<Scenario> scenarios;
 
     /*
      * Constructors
@@ -20,12 +20,19 @@ public class MusicHall {
 
     }
 
-    public MusicHall(String name, int id, int scenariosAmount) {
+    public MusicHall(String name, int scenariosAmount) {
         this.name = name;
-        this.id = id;
         this.scenariosAmount = scenariosAmount;
         this.employees = new ArrayList<Employee>();
-        this.scenarios = new ArrayList<Scenarios>();
+        this.scenarios = new ArrayList<Scenario>();
+    }
+
+    public MusicHall(int musicHallID, String name, int scenariosAmount) {
+        this.name = name;
+        this.musicHallID = musicHallID;
+        this.scenariosAmount = scenariosAmount;
+        this.employees = new ArrayList<Employee>();
+        this.scenarios = new ArrayList<Scenario>();
     }
 
     /*
@@ -37,7 +44,7 @@ public class MusicHall {
     }
 
     public int getId() {
-        return id;
+        return musicHallID;
     }
 
     public int getScenariosAmount() {
@@ -48,7 +55,7 @@ public class MusicHall {
         return employees;
     }
 
-    public ArrayList<Scenarios> getScenarios() {
+    public ArrayList<Scenario> getScenarios() {
         return scenarios;
     }
 
@@ -57,7 +64,7 @@ public class MusicHall {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.musicHallID = id;
     }
 
     public void setScenariosAmount(int scenariosAmount) {
@@ -68,7 +75,7 @@ public class MusicHall {
         this.employees = employees;
     }
 
-    public void setScenarios(ArrayList<Scenarios> scenarios) {
+    public void setScenarios(ArrayList<Scenario> scenarios) {
         this.scenarios = scenarios;
     }
 
@@ -81,19 +88,19 @@ public class MusicHall {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MusicHall musicHall = (MusicHall) o;
-        return id == musicHall.id && scenariosAmount == musicHall.scenariosAmount && name.equals(musicHall.name) && Objects.equals(employees, musicHall.employees) && scenarios.equals(musicHall.scenarios);
+        return musicHallID == musicHall.musicHallID && scenariosAmount == musicHall.scenariosAmount && name.equals(musicHall.name) && Objects.equals(employees, musicHall.employees) && scenarios.equals(musicHall.scenarios);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id, scenariosAmount, employees, scenarios);
+        return Objects.hash(name, musicHallID, scenariosAmount, employees, scenarios);
     }
 
     @Override
     public String toString() {
         return "MusicHall{" +
                 "name='" + name + '\'' +
-                ", id=" + id +
+                ", musicHalID=" + musicHallID +
                 ", scenariosAmount=" + scenariosAmount +
                 ", employees=" + employees.size() +
                 '}';

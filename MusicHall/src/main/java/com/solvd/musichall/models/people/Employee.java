@@ -1,14 +1,25 @@
 package com.solvd.musichall.models.people;
 
 public class Employee extends Person {
+    private int employeeID;
     private String role;
 
-    public Employee(String role) {
-        this.role = role;
+    /*
+     * Constructors
+     */
+
+    public Employee() {
+
     }
 
     public Employee(String name, String lastname, int id, String role) {
         super(name, lastname, id);
+        this.role = role;
+    }
+
+    public Employee(int employeeID, String name, String lastname, int id, String role) {
+        super(name, lastname, id);
+        this.employeeID = employeeID;
         this.role = role;
     }
 
@@ -22,5 +33,20 @@ public class Employee extends Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /*
+     * Override methods
+     */
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "role='" + role + '\'' +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                '}';
     }
 }

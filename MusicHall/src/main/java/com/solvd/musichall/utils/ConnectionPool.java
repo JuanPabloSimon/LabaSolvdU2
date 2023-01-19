@@ -12,18 +12,18 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionPool2 {
+public class ConnectionPool {
     private final String DB = "mydb";
     private final String URL = "jdbc:mysql://localhost:3306/" + DB;
     private final String USER = "root";
     private final String PASSWORD = "jsimon0301";
 
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class);
-    private static ConnectionPool2 connectionPool;
+    private static ConnectionPool connectionPool;
     private final static BasicDataSource dataSource = new BasicDataSource();
 
 
-    private ConnectionPool2() throws SQLException {
+    private ConnectionPool() throws SQLException {
         LOGGER.info("Reading properties file.");
         Properties properties = new Properties();
         try (InputStream inputStream = Files.newInputStream(Paths.get("musichall/src/main/resources/mysqlDB.properties"))) {
@@ -40,10 +40,10 @@ public class ConnectionPool2 {
         dataSource.setInitialSize(5);
     }
 
-    public static ConnectionPool2 getInstance() {
+    public static ConnectionPool getInstance() {
         if (connectionPool == null) {
             try {
-                connectionPool = new ConnectionPool2();
+                connectionPool = new ConnectionPool();
             } catch (SQLException e) {
                 LOGGER.error(e.getMessage());
             }
