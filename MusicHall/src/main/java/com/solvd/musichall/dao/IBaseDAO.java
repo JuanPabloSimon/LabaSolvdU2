@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface IBaseDAO<T> {
 
-    T get(int id);
+    T getByID(int id);
 
     T create(T t);
 
     T update(T t);
 
-    void delete(int id);
+    void deleteByID(int id);
 
     List<T> getAll();
 }

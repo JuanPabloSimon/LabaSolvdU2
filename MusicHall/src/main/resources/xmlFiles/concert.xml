@@ -1,0 +1,36 @@
+<concert id="85">
+    <duration>120</duration>
+    <band id="">
+        <name>Rush</name>
+        <genre>Hard Rock</genre>
+        <membersAmount>3</membersAmount>
+        <members>
+            <musician id="35">
+                <role>Guitarrist</role>
+                <name>Oliver</name>
+                <lastname>Somer</lastname>
+                <age>38</age>
+            </musician>
+        </members>
+    </band>
+    <audience>
+        <tickets id="8956">
+            <value>10</value>
+            <person id="589">
+                <name>Juan</name>
+                <lastname>Simon</lastname>
+                <age>21</age>
+            </person>
+            <seat id="59">
+                <numeration>12</numeration>
+                <reserved>false</reserved>
+            </seat>
+        </tickets>
+    </audience>
+    <services>
+        <service id="98">
+            <name>BigBurgers</name>
+            <type>Foodtruck</type>
+        </service>
+    </services>
+</concert>

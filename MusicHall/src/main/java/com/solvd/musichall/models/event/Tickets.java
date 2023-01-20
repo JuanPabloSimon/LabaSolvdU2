@@ -8,7 +8,6 @@ import java.util.Objects;
 public class Tickets {
     private int ticketID;
     private float value;
-    private Concert concert;
     private Person person;
     private Seats seat;
 
@@ -23,17 +22,15 @@ public class Tickets {
         this.value = value;
     }
 
-    public Tickets(float value, Concert concert, Person person, Seats seat) {
+    public Tickets(float value, Person person, Seats seat) {
         this.value = value;
-        this.concert = concert;
         this.person = person;
         this.seat = seat;
     }
 
-    public Tickets(int ticketID, float value, Concert concert, Person person, Seats seat) {
+    public Tickets(int ticketID, float value, Person person, Seats seat) {
         this.ticketID = ticketID;
         this.value = value;
-        this.concert = concert;
         this.person = person;
         this.seat = seat;
     }
@@ -50,9 +47,6 @@ public class Tickets {
         return value;
     }
 
-    public Concert getConcert() {
-        return concert;
-    }
 
     public Person getPerson() {
         return person;
@@ -60,6 +54,10 @@ public class Tickets {
 
     public Seats getSeat() {
         return seat;
+    }
+
+    public int getSeatNumber() {
+        return this.seat.getNumeration();
     }
 
     public void setTicketID(int ticketID) {
@@ -70,9 +68,6 @@ public class Tickets {
         this.value = value;
     }
 
-    public void setConcert(Concert concert) {
-        this.concert = concert;
-    }
 
     public void setPerson(Person person) {
         this.person = person;
@@ -91,12 +86,12 @@ public class Tickets {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tickets tickets = (Tickets) o;
-        return ticketID == tickets.ticketID && Float.compare(tickets.value, value) == 0 && concert.equals(tickets.concert) && person.equals(tickets.person) && seat.equals(tickets.seat);
+        return ticketID == tickets.ticketID && Float.compare(tickets.value, value) == 0 && person.equals(tickets.person) && seat.equals(tickets.seat);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ticketID, value, concert, person, seat);
+        return Objects.hash(ticketID, value, person, seat);
     }
 
     @Override
@@ -104,7 +99,6 @@ public class Tickets {
         return "Tickets{" +
                 "ticketID=" + ticketID +
                 ", value=" + value +
-                ", concert=" + concert +
                 ", person=" + person +
                 ", seat=" + seat +
                 '}';

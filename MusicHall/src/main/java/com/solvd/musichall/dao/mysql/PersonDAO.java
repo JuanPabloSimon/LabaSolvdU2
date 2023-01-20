@@ -22,7 +22,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     }
 
     @Override
-    public Person get(int id) {
+    public Person getByID(int id) {
         LOGGER.info("Searching Person with id: " + id);
         try {
             String q = "SELECT * FROM Person WHERE idPerson=?";
@@ -76,7 +76,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteByID(int id) {
         LOGGER.info("Deleting person with id " + id + ".");
         try {
             String query = "DELETE FROM Persons WHERE idPerson= ?";
