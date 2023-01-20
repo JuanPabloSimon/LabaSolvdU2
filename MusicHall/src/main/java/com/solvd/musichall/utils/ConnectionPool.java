@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionPool {
-    private final String DB = "mydb";
+    private final String DB = "musichall";
     private final String URL = "jdbc:mysql://localhost:3306/" + DB;
     private final String USER = "root";
     private final String PASSWORD = "jsimon0301";
