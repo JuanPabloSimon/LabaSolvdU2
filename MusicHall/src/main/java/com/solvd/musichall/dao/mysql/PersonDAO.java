@@ -9,7 +9,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PersonDAO extends MySQLDAO implements IPersonDAO {
     private static final Logger LOGGER = LogManager.getLogger(PersonDAO.class);
     private final Connection connection;
@@ -29,6 +28,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
             return new Person(
                     resultSet.getString("name"),
                     resultSet.getString("lastName"),
+                    resultSet.getInt("idPerson"),
                     resultSet.getInt("age")
             );
         } catch (SQLException sqle) {
@@ -48,8 +48,8 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
             statement.setString(2, person.getLastname());
             statement.setInt(3, person.getAge());
             statement.executeUpdate();
-        } catch (SQLException sqle) {
-            LOGGER.error(sqle.getMessage(), sqle);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
         }
         return person;
     }

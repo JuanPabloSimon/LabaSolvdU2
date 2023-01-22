@@ -41,6 +41,22 @@ public class Scenario {
     }
 
     /*
+     * Methods
+     */
+
+    public void addConcert(Concert concert) {
+        concerts.add(concert);
+    }
+
+    public void addSeats(Seats seat) {
+        seats.add(seat);
+    }
+
+    public void addCleanService(CleanService cleanService) {
+        cleanServices.add(cleanService);
+    }
+
+    /*
         Getters and Setters
      */
 

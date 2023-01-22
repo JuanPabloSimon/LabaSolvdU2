@@ -36,6 +36,18 @@ public class MusicHall {
     }
 
     /*
+     * Methods
+     */
+
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
+    }
+
+    public void addScenario(Scenario scenario) {
+        this.scenarios.add(scenario);
+    }
+
+    /*
      * Getters and Setters
      */
 
