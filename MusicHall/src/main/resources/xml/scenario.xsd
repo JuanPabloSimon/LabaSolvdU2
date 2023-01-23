@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="scenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="scenarioId" type="xs:integer"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="capability" type="xs:integer"/>
+                <xs:element name="concerts">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="concert" type="concert"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="seats">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="seat" type="seat"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="cleanServices">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                            <xs:element name="cleanService" type="cleanService"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!--    Types-->
+
+    <xs:complexType name="concert">
+        <xs:all>
+            <xs:element name="concertId" type="xs:integer"/>
+            <xs:element name="duration" type="xs:float"/>
+            <xs:element name="band" type="band"/>
+            <xs:element name="tickets">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="ticket" type="ticket"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="services">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="service" type="service"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="seat">
+        <xs:sequence>
+            <xs:element name="seatId" type="xs:integer"/>
+            <xs:element name="numeration" type="xs:integer"/>
+            <xs:element name="reserved" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cleanService">
+        <xs:all>
+            <xs:element name="cleanServiceId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+            <xs:element name="time" type="xs:float"/>
+            <xs:element name="price" type="xs:float"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="band">
+        <xs:all>
+            <xs:element name="bandId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="genre" type="xs:string"/>
+            <xs:element name="membersAmount" type="xs:integer"/>
+            <xs:element name="members">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="musician" type="musician"/>
+                        <xs:element name="musician" type="musician"/>
+                        <xs:element name="musician" type="musician"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="ticket">
+        <xs:all>
+            <xs:element name="ticketId" type="xs:integer"/>
+            <xs:element name="value" type="xs:float"/>
+            <xs:element name="person" type="person"/>
+            <xs:element name="seat" type="seat"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="service">
+        <xs:all>
+            <xs:element name="serviceId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="type" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+
+    <xs:complexType name="musician">
+        <xs:all>
+            <xs:element name="musicianId" type="xs:integer"/>
+            <xs:element name="role" type="xs:string"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="lastname" type="xs:string"/>
+            <xs:element name="age" type="xs:integer"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="person">
+        <xs:all>
+            <xs:element name="personId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="lastname" type="xs:string"/>
+            <xs:element name="age" type="xs:integer"/>
+        </xs:all>
+    </xs:complexType>
+</xs:schema>

@@ -5,7 +5,7 @@ import com.solvd.musichall.models.people.Person;
 
 import java.util.Objects;
 
-public class Tickets {
+public class Ticket {
     private int ticketID;
     private float value;
     private Person person;
@@ -15,20 +15,20 @@ public class Tickets {
      * Constructor
      */
 
-    public Tickets() {
+    public Ticket() {
     }
 
-    public Tickets(float value) {
+    public Ticket(float value) {
         this.value = value;
     }
 
-    public Tickets(float value, Person person, Seats seat) {
+    public Ticket(float value, Person person, Seats seat) {
         this.value = value;
         this.person = person;
         this.seat = seat;
     }
 
-    public Tickets(int ticketID, float value, Person person, Seats seat) {
+    public Ticket(int ticketID, float value, Person person, Seats seat) {
         this.ticketID = ticketID;
         this.value = value;
         this.person = person;
@@ -85,7 +85,7 @@ public class Tickets {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Tickets tickets = (Tickets) o;
+        Ticket tickets = (Ticket) o;
         return ticketID == tickets.ticketID && Float.compare(tickets.value, value) == 0 && person.equals(tickets.person) && seat.equals(tickets.seat);
     }
 

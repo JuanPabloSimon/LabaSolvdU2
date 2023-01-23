@@ -27,6 +27,10 @@ public class Employee extends Person {
      * Getters and Setters
      */
 
+    public int getEmployeeID() {
+        return employeeID;
+    }
+
     public String getRole() {
         return role;
     }

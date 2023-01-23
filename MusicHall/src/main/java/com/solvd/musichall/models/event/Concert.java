@@ -1,18 +1,15 @@
 package com.solvd.musichall.models.event;
 
-import com.solvd.musichall.models.people.Person;
 import com.solvd.musichall.models.services.ConcertService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Concert {
     private int concertID;
     private float duration;
     private Band band;
-    private Map<Person, Tickets> audience;
+    private List<Ticket> audience;
     private List<ConcertService> services;
 
     /*
@@ -20,13 +17,13 @@ public class Concert {
      */
 
     public Concert() {
-        this.audience = new HashMap<>();
+        this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }
 
     public Concert(float duration) {
         this.duration = duration;
-        this.audience = new HashMap<>();
+        this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
 
     }
@@ -34,7 +31,7 @@ public class Concert {
     public Concert(float duration, Band band) {
         this.duration = duration;
         this.band = band;
-        this.audience = new HashMap<>();
+        this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }
 
@@ -42,7 +39,7 @@ public class Concert {
         this.concertID = concertID;
         this.duration = duration;
         this.band = band;
-        this.audience = new HashMap<>();
+        this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }
 
@@ -62,7 +59,7 @@ public class Concert {
         return band;
     }
 
-    public Map<Person, Tickets> getAudience() {
+    public List<Ticket> getAudience() {
         return audience;
     }
 

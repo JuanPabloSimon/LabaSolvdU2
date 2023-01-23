@@ -19,7 +19,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public Person getByID(int id) {
-        LOGGER.info("Searching Person with id: " + id);
+        LOGGER.info(String.format("Searching Person with id: %d", id));
         try {
             String q = "SELECT * FROM Person WHERE idPerson=?";
             PreparedStatement statement = connection.prepareStatement(q);
@@ -39,7 +39,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public Person create(Person person) {
-        LOGGER.info("Creating Person, id: " + person.getId());
+        LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
         try {
             String q = "INSERT INTO Person (name, lastname, age) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(q);
@@ -56,7 +56,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public Person update(Person person) {
-        LOGGER.info("Updating person with id " + person.getId() + ".");
+        LOGGER.info(String.format("Updating person with id: %d", person.getId()));
         try {
             String q = "UPDATE Persons SET name = ?, lasName=?, age = ?, WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(q);
@@ -74,7 +74,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public void deleteByID(int id) {
-        LOGGER.info("Deleting person with id " + id + ".");
+        LOGGER.info(String.format("Deleting person with id: %d.", id));
         try {
             String query = "DELETE FROM Persons WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(query);

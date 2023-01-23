@@ -22,7 +22,7 @@ public class MusicHallService {
         this.connection = connection;
         this.mDAO = new MusicHallDAO(connection);
         this.sService = new ScenarioService(connection);
-        this.eDAO = new EmployeeDAO();
+        this.eDAO = new EmployeeDAO(connection);
     }
 
     public MusicHall getMusicHallById(int id) {

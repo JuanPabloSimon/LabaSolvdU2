@@ -35,6 +35,14 @@ public class Band {
     }
 
     /*
+     * Methods
+     */
+
+    public void addMember(Musician m) {
+        this.members.add(m);
+    }
+
+    /*
      * Getters and Setters
      */
 
@@ -72,5 +80,20 @@ public class Band {
 
     public void setMembersAmount(int membersAmount) {
         this.membersAmount = membersAmount;
+    }
+
+    /*
+     * Override methods
+     */
+
+    @Override
+    public String toString() {
+        return "Band{" +
+                "bandID=" + bandID +
+                ", name='" + name + '\'' +
+                ", genre='" + genre + '\'' +
+                ", membersAmount=" + membersAmount +
+                ", members=" + members +
+                '}';
     }
 }
