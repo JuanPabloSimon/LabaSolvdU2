@@ -2,14 +2,25 @@ package com.solvd.musichall.models.event;
 
 import com.solvd.musichall.models.people.Musician;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "band")
 public class Band {
+    @XmlAttribute(name = "id")
     private int bandID;
+    @XmlElement(name = "bandName")
     private String name;
+    @XmlElement(name = "genre")
     private String genre;
+    @XmlElement(name = "membersAmount")
     private int membersAmount;
+    @XmlElementWrapper(name = "members")
+    @XmlElement(name = "musician")
     private List<Musician> members;
 
     /*

@@ -1,4 +1,4 @@
-package com.solvd.xml.parser;
+package com.solvd.musichall.parsers.xml;
 
 import com.solvd.musichall.models.event.Band;
 import com.solvd.musichall.models.people.Musician;

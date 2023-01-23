@@ -38,6 +38,19 @@ public class MusicHallService {
         return musicHall;
     }
 
+    public MusicHall createMusicHall(MusicHall musicHall) {
+        MusicHall m = mDAO.create(musicHall);
+        ArrayList<Employee> employees = musicHall.getEmployees();
+        for (Employee e : employees) {
+            eDAO.create(e);
+        }
+        ArrayList<Scenario> scenarios = musicHall.getScenarios();
+        for (Scenario s : scenarios) {
+            sService.createScenario(s);
+        }
+        return musicHall;
+    }
+
     public ArrayList<MusicHall> getAllMusicHall() {
         ArrayList<MusicHall> musicHalls = mDAO.getAll();
         for (MusicHall musicHall : musicHalls) {

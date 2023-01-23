@@ -26,9 +26,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             return new Person(
+                    resultSet.getInt("idPerson"),
                     resultSet.getString("name"),
                     resultSet.getString("lastName"),
-                    resultSet.getInt("idPerson"),
                     resultSet.getInt("age")
             );
         } catch (SQLException sqle) {
@@ -97,9 +97,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next())
                 persons.add(new Person(
+                        resultSet.getInt("idPerson"),
                         resultSet.getString("name"),
                         resultSet.getString("lastName"),
-                        resultSet.getInt("idPerson"),
                         resultSet.getInt("age")
                 ));
         } catch (SQLException e) {

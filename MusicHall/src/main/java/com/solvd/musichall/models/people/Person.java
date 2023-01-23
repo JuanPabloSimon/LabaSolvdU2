@@ -1,19 +1,28 @@
 package com.solvd.musichall.models.people;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+@XmlRootElement(name = "person")
 public class Person {
-    protected String name;
-    protected String lastname;
-    protected int age;
+    @XmlElement(name = "idPerson")
     protected int id;
+
+    @XmlElement(name = "name")
+    protected String name;
+
+    @XmlElement(name = "lastname")
+    protected String lastname;
+
+    @XmlElement(name = "age")
+    protected int age;
 
     /*
      * Constructors
      */
 
     public Person() {
-
     }
 
     public Person(int id) {
@@ -26,10 +35,10 @@ public class Person {
         this.age = age;
     }
 
-    public Person(String name, String lastname, int id, int age) {
+    public Person(int id, String name, String lastname, int age) {
+        this.id = id;
         this.name = name;
         this.lastname = lastname;
-        this.id = id;
         this.age = age;
     }
 

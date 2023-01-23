@@ -1,9 +1,14 @@
 package com.solvd.musichall.models.people;
 
-import java.util.Objects;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "musician")
 public class Musician extends Person {
+    @XmlAttribute(name = "id")
     private int musicianID;
+    @XmlElement(name = "role")
     private String role;
 
     /*
@@ -43,7 +48,6 @@ public class Musician extends Person {
     /*
      * Override methods
      */
-
 
 
     @Override

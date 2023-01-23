@@ -47,6 +47,10 @@ public class ScenarioService {
         return scenario;
     }
 
+    public Scenario createScenario(Scenario scenario) {
+        return null;
+    }
+
     public ArrayList<Scenario> getAllScenarios() {
         ArrayList<Scenario> scenarios = sDAO.getAll();
         for (Scenario scenario : scenarios) {
