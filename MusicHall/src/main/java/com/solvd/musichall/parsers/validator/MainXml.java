@@ -7,11 +7,12 @@ import org.xml.sax.SAXException;
 
 public class MainXml {
     private static final Logger LOGGER = LogManager.getLogger(MainXml.class);
+    private final static String XSD_PATH = "musichall/src/main/resources/xml/scenario.xsd";
+    private final static String XML_PATH = "musichall/src/main/resources/xml/scenario.xml";
+
 
     public static void main(String[] args) throws SAXException {
-        String xsdPath = "musichall/src/main/resources/scenario.xsd";
-        String xmlPath = "musichall/src/main/resources/scenario.xml";
-        boolean valid = XSDValidator.validateXMLSchema(xsdPath, xmlPath);
+        boolean valid = XSDValidator.validateXMLSchema(XSD_PATH, XML_PATH);
         LOGGER.info(String.format("XML file is %s", (valid ? "valid." : "invalid.")));
     }
 }
