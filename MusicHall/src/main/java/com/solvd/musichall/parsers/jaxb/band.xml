@@ -1,1 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><band id="34"><bandName>Metallica</bandName><genre>Metal</genre><membersAmount>3</membersAmount><members><musician id="63"><personId>0</personId><name>Pepe</name><lastname>pepe</lastname><age>21</age><role>Singer</role></musician><musician id="52"><personId>0</personId><name>Pepe2</name><lastname>pepe2</lastname><age>40</age><role>Guitar</role></musician><musician id="51"><personId>0</personId><name>Pepe3</name><lastname>pepe3</lastname><age>41</age><role>Bass Guitar</role></musician></members></band>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<band id="34">
+    <bandName>Metallica</bandName>
+    <genre>Metal</genre>
+    <membersAmount>3</membersAmount>
+    <members>
+        <musician id="63">
+            <personId>0</personId>
+            <name>Pepe</name>
+            <lastname>pepe</lastname>
+            <age>21</age>
+            <role>Singer</role>
+        </musician>
+        <musician id="52">
+            <personId>0</personId>
+            <name>Pepe2</name>
+            <lastname>pepe2</lastname>
+            <age>40</age>
+            <role>Guitar</role>
+        </musician>
+        <musician id="51">
+            <personId>0</personId>
+            <name>Pepe3</name>
+            <lastname>pepe3</lastname>
+            <age>41</age>
+            <role>Bass Guitar</role>
+        </musician>
+    </members>
+</band>

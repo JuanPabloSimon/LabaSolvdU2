@@ -31,6 +31,7 @@ public class JaxbRunner {
 
             // Marshall
             Marshaller m = c.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             m.marshal(band, file);
 
             // Unmarshall
