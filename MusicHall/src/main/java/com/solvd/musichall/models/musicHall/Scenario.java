@@ -11,14 +11,14 @@ public class Scenario {
     private String name;
     private int capability;
     private List<Concert> concerts;
-    private List<Seats> seats;
+    private List<Seat> seats;
     private List<CleanService> cleanServices;
 
     /*
      * Constructors
      */
     public Scenario() {
-        this.seats = new ArrayList<Seats>();
+        this.seats = new ArrayList<Seat>();
         this.concerts = new ArrayList<Concert>();
         this.cleanServices = new ArrayList<CleanService>();
     }
@@ -26,7 +26,7 @@ public class Scenario {
     public Scenario(String name, int capability) {
         this.name = name;
         this.capability = capability;
-        this.seats = new ArrayList<Seats>();
+        this.seats = new ArrayList<Seat>();
         this.concerts = new ArrayList<Concert>();
         this.cleanServices = new ArrayList<CleanService>();
     }
@@ -35,7 +35,7 @@ public class Scenario {
         this.scenarioID = scenarioID;
         this.name = name;
         this.capability = capability;
-        this.seats = new ArrayList<Seats>();
+        this.seats = new ArrayList<Seat>();
         this.concerts = new ArrayList<Concert>();
         this.cleanServices = new ArrayList<CleanService>();
     }
@@ -48,7 +48,7 @@ public class Scenario {
         concerts.add(concert);
     }
 
-    public void addSeats(Seats seat) {
+    public void addSeats(Seat seat) {
         seats.add(seat);
     }
 
@@ -72,7 +72,7 @@ public class Scenario {
         return capability;
     }
 
-    public List<Seats> getSeats() {
+    public List<Seat> getSeats() {
         return seats;
     }
 

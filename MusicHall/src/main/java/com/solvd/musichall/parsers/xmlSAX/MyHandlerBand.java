@@ -1,4 +1,4 @@
-package com.solvd.musichall.parsers.xml;
+package com.solvd.musichall.parsers.xmlSAX;
 
 import com.solvd.musichall.models.event.Band;
 import com.solvd.musichall.models.people.Musician;
@@ -48,7 +48,7 @@ public class MyHandlerBand extends DefaultHandler {
                 String id = attributes.getValue("id");
                 // initialize object and set id attribute
                 band = new Band();
-                band.setBandID(Integer.parseInt(id));
+                band.setID(Integer.parseInt(id));
                 // initialize list
                 if (bandList == null)
                     bandList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class MyHandlerBand extends DefaultHandler {
             // add Band object to list
             bandList.add(band);
         } else if (qName.equalsIgnoreCase("musician")) {
-            band.addMember(musician);
+            band.addBandMember(musician);
         }
     }
 

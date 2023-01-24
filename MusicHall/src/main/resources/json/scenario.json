@@ -1,0 +1,130 @@
+{
+  "scenario": {
+    "scenarioID": 5,
+    "name": "Scenario 1",
+    "capability": 500,
+    "concerts": [
+      {
+        "concertID": 74,
+        "duration": 150,
+        "band": {
+          "bandID": 74,
+          "bandName": "Nickelback",
+          "genre": "Rock",
+          "membersAmount": 4,
+          "members": [
+            {
+              "id": 6259,
+              "name": "Someone",
+              "lastName": "Smith",
+              "role": "Singer",
+              "age": 40,
+              "personId": 32
+            },
+            {
+              "id": 7459,
+              "name": "Someone2",
+              "lastName": "Smith2",
+              "role": "Guitar",
+              "age": 41,
+              "personId": 63
+            },
+            {
+              "id": 2356,
+              "name": "Someone3",
+              "lastName": "Smith3",
+              "role": "Drums",
+              "age": 45,
+              "personId": 11
+            }
+          ]
+        },
+        "tickets": [
+          {
+            "ticketID": 78546,
+            "value": 50,
+            "person": {
+              "personId": 74123,
+              "name": "Juan",
+              "lastName": "Simon",
+              "age": 21
+            },
+            "seat": {
+              "seatID": 63958,
+              "numeration": 15,
+              "reserved": false
+            }
+          },
+          {
+            "ticketID": 47586,
+            "value": 50,
+            "person": {
+              "personId": 45826,
+              "name": "Juan2",
+              "lastName": "Simon2",
+              "age": 21
+            },
+            "seat": {
+              "seatID": 31245,
+              "numeration": 14,
+              "reserved": false
+            }
+          },
+          {
+            "ticketID": 29856,
+            "value": 50,
+            "person": {
+              "personId": 12436,
+              "name": "Juan3",
+              "lastName": "Simon3",
+              "age": 21
+            },
+            "seat": {
+              "seatID": 75864,
+              "numeration": 13,
+              "reserved": false
+            }
+          }
+        ],
+        "services": [
+          {
+            "concertServiceID": 16423,
+            "name": "TacoBell",
+            "type": "FoodTruck"
+          }
+        ]
+      }
+    ],
+    "seats": [
+      {
+        "seatID": 75864,
+        "numeration": 15,
+        "reserved": false
+      },
+      {
+        "seatID": 75865,
+        "numeration": 16,
+        "reserved": false
+      },
+      {
+        "seatID": 75866,
+        "numeration": 17,
+        "reserved": false
+      },
+      {
+        "seatID": 75867,
+        "numeration": 18,
+        "reserved": false
+      }
+    ],
+    "cleanServices": [
+      {
+        "cleanServieceID": 45698,
+        "name": "CleaningRoom",
+        "type": "Seats Cleaning",
+        "time": 60,
+        "price": 200
+      }
+    ]
+  }
+}

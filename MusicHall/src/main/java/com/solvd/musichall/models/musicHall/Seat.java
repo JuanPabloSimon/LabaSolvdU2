@@ -1,6 +1,6 @@
 package com.solvd.musichall.models.musicHall;
 
-public class Seats {
+public class Seat {
     private int seatID;
     private int numeration;
     private boolean reserved;
@@ -9,14 +9,15 @@ public class Seats {
      * Constructor
      */
 
-    public Seats() {
+    public Seat() {
     }
 
-    public Seats(int numeration, boolean reserved) {
+    public Seat(int numeration, boolean reserved) {
         this.numeration = numeration;
         this.reserved = reserved;
     }
-    public Seats(int seatID, int numeration, boolean reserved) {
+
+    public Seat(int seatID, int numeration, boolean reserved) {
         this.seatID = seatID;
         this.numeration = numeration;
         this.reserved = reserved;

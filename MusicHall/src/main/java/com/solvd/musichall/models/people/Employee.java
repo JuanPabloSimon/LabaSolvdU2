@@ -50,7 +50,7 @@ public class Employee extends Person {
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", id=" + id +
+                ", id=" + personId +
                 '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.solvd.musichall.models.event;
 
-import com.solvd.musichall.models.musicHall.Seats;
+import com.solvd.musichall.models.musicHall.Seat;
 import com.solvd.musichall.models.people.Person;
 
 import java.util.Objects;
@@ -9,7 +9,7 @@ public class Ticket {
     private int ticketID;
     private float value;
     private Person person;
-    private Seats seat;
+    private Seat seat;
 
     /*
      * Constructor
@@ -22,13 +22,13 @@ public class Ticket {
         this.value = value;
     }
 
-    public Ticket(float value, Person person, Seats seat) {
+    public Ticket(float value, Person person, Seat seat) {
         this.value = value;
         this.person = person;
         this.seat = seat;
     }
 
-    public Ticket(int ticketID, float value, Person person, Seats seat) {
+    public Ticket(int ticketID, float value, Person person, Seat seat) {
         this.ticketID = ticketID;
         this.value = value;
         this.person = person;
@@ -52,7 +52,7 @@ public class Ticket {
         return person;
     }
 
-    public Seats getSeat() {
+    public Seat getSeat() {
         return seat;
     }
 
@@ -73,7 +73,7 @@ public class Ticket {
         this.person = person;
     }
 
-    public void setSeat(Seats seat) {
+    public void setSeat(Seat seat) {
         this.seat = seat;
     }
 

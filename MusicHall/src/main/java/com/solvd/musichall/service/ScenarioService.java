@@ -3,7 +3,7 @@ package com.solvd.musichall.service;
 import com.solvd.musichall.dao.mysql.*;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.musicHall.Scenario;
-import com.solvd.musichall.models.musicHall.Seats;
+import com.solvd.musichall.models.musicHall.Seat;
 import com.solvd.musichall.models.services.CleanService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,8 +36,8 @@ public class ScenarioService {
         for (Concert concert : concerts) {
             scenario.addConcert(concert);
         }
-        ArrayList<Seats> seats = seatDAO.getSeatByScenarioId(id);
-        for (Seats seat : seats) {
+        ArrayList<Seat> seats = seatDAO.getSeatByScenarioId(id);
+        for (Seat seat : seats) {
             scenario.addSeats(seat);
         }
         ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
@@ -58,8 +58,8 @@ public class ScenarioService {
             for (Concert concert : concerts) {
                 scenario.addConcert(concert);
             }
-            ArrayList<Seats> seats = seatDAO.getSeatByScenarioId(scenario.getScenarioID());
-            for (Seats seat : seats) {
+            ArrayList<Seat> seats = seatDAO.getSeatByScenarioId(scenario.getScenarioID());
+            for (Seat seat : seats) {
                 scenario.addSeats(seat);
             }
             ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(scenario.getScenarioID());
@@ -77,8 +77,8 @@ public class ScenarioService {
             for (Concert concert : concerts) {
                 scenario.addConcert(concert);
             }
-            ArrayList<Seats> seats = seatDAO.getSeatByScenarioId(id);
-            for (Seats seat : seats) {
+            ArrayList<Seat> seats = seatDAO.getSeatByScenarioId(id);
+            for (Seat seat : seats) {
                 scenario.addSeats(seat);
             }
             ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);

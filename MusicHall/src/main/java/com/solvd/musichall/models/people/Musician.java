@@ -19,14 +19,14 @@ public class Musician extends Person {
         super();
     }
 
-    public Musician(String name, String lastname, int id, String role) {
-        super(name, lastname, id);
+    public Musician(String name, String lastname, int personId, String role) {
+        super(name, lastname, personId);
         this.role = role;
     }
 
 
-    public Musician(int musicianID, String name, String lastname, int id, String role) {
-        super(name, lastname, id);
+    public Musician(int musicianID, String name, String lastname, int personId, String role) {
+        super(name, lastname, personId);
         this.musicianID = musicianID;
         this.role = role;
     }
@@ -35,7 +35,7 @@ public class Musician extends Person {
      * Getters and Setters
      */
 
-    public String getRole() {
+    public String getBandRole() {
         return role;
     }
 

@@ -49,7 +49,7 @@ public class Band {
      * Methods
      */
 
-    public void addMember(Musician m) {
+    public void addBandMember(Musician m) {
         this.members.add(m);
     }
 
@@ -57,27 +57,27 @@ public class Band {
      * Getters and Setters
      */
 
-    public int getBandID() {
+    public int getBandBandID() {
         return bandID;
     }
 
-    public String getName() {
+    public String getBandName() {
         return name;
     }
 
-    public String getGenre() {
+    public String getBandGenre() {
         return genre;
     }
 
-    public int getMembersAmount() {
+    public int getBandMembersAmount() {
         return membersAmount;
     }
 
-    public List<Musician> getMembers() {
+    public List<Musician> getBandMembers() {
         return members;
     }
 
-    public void setBandID(int bandID) {
+    public void setID(int bandID) {
         this.bandID = bandID;
     }
 

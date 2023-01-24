@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
 public class JaxbRunner {
@@ -17,16 +18,26 @@ public class JaxbRunner {
 //        Musician musician = new Musician(63, "Pepe", "pepe", 21, "Singer");
 //        Musician musician2 = new Musician(52, "Pepe2", "pepe2", 40, "Guitar");
 //        Musician musician3 = new Musician(51, "Pepe3", "pepe3", 41, "Bass Guitar");
-//        band.addMember(musician);
-//        band.addMember(musician2);
-//        band.addMember(musician3);
+//        band.addBandMember(musician);
+//        band.addBandMember(musician2);
+//        band.addBandMember(musician3);
+
 
         Person person = new Person(269, "Juan", "Simon", 21);
-//        Test t = new Test("Juan", "About to quit");
         try {
+            File file = new File("musichall/src/main/java/com/solvd/musichall/parsers/jaxb/person.xml");
             JAXBContext c = JAXBContext.newInstance(Person.class);
+
+            // Marshall
             Marshaller m = c.createMarshaller();
-            m.marshal(m, new File("musichall/src/main/java/com/solvd/parsers/jaxb/person.xml"));
+            m.marshal(person, file);
+
+            // Unmarshall
+            Unmarshaller u = c.createUnmarshaller();
+            Person person1;
+            person1 = (Person) u.unmarshal(file);
+
+            LOGGER.info(person1);
         } catch (JAXBException e) {
             LOGGER.error(e.getMessage(), e);
         }

@@ -77,7 +77,7 @@
             </services>
         </concert>
     </concerts>
-    <seats>
+    <seat>
         <seat>
             <seatId>59</seatId>
             <numeration>12</numeration>
@@ -98,7 +98,7 @@
             <numeration>15</numeration>
             <reserved>false</reserved>
         </seat>
-    </seats>
+    </seat>
     <cleanServices>
         <cleanService>
             <cleanServiceId>65</cleanServiceId>

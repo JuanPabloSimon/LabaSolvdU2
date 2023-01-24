@@ -6,8 +6,8 @@ import java.util.Objects;
 
 @XmlRootElement(name = "person")
 public class Person {
-    @XmlElement(name = "idPerson")
-    protected int id;
+    @XmlElement(name = "personId")
+    protected int personId;
 
     @XmlElement(name = "name")
     protected String name;
@@ -26,7 +26,7 @@ public class Person {
     }
 
     public Person(int id) {
-        this.id = id;
+        this.personId = id;
     }
 
     public Person(String name, String lastname, int age) {
@@ -36,7 +36,7 @@ public class Person {
     }
 
     public Person(int id, String name, String lastname, int age) {
-        this.id = id;
+        this.personId = id;
         this.name = name;
         this.lastname = lastname;
         this.age = age;
@@ -46,20 +46,20 @@ public class Person {
      * Getters and Setters
      */
 
-    public String getName() {
+    public String getPersonName() {
         return this.name;
     }
 
-    public String getLastname() {
+    public String getPersonLastname() {
         return lastname;
     }
 
-    public int getAge() {
+    public int getPersonAge() {
         return age;
     }
 
-    public int getId() {
-        return id;
+    public int getPersonId() {
+        return personId;
     }
 
     public void setName(String name) {
@@ -75,7 +75,7 @@ public class Person {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.personId = id;
     }
 
     /*
@@ -88,7 +88,7 @@ public class Person {
                 "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", age=" + age +
-                ", id=" + id +
+                ", id=" + personId +
                 '}';
     }
 
@@ -97,11 +97,11 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return age == person.age && id == person.id && name.equals(person.name) && lastname.equals(person.lastname);
+        return age == person.age && personId == person.personId && name.equals(person.name) && lastname.equals(person.lastname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, lastname, age, id);
+        return Objects.hash(name, lastname, age, personId);
     }
 }

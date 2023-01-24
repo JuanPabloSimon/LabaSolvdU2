@@ -1,4 +1,4 @@
-package com.solvd.musichall.parsers.xml;
+package com.solvd.musichall.parsers.xmlSAX;
 
 import com.solvd.musichall.models.event.Band;
 import org.xml.sax.SAXException;
