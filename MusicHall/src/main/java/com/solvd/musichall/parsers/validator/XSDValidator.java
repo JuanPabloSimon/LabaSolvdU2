@@ -22,7 +22,10 @@ public class XSDValidator {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
         } catch (IOException e) {
-            LOGGER.error("Exception: " + e.getMessage());
+            LOGGER.error("IO Exception: " + e.getMessage());
+            return false;
+        } catch (SAXException e) {
+            LOGGER.error("SAXException: " + e.getMessage());
             return false;
         }
         return true;

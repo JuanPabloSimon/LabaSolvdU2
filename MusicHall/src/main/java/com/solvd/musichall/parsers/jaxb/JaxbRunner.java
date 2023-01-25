@@ -16,9 +16,9 @@ public class JaxbRunner {
 
     public static void main(String[] args) {
         Band band = new Band(34, "Metallica", "Metal", 3);
-        Musician musician = new Musician(63, "Pepe", "pepe", 21, "Singer");
-        Musician musician2 = new Musician(52, "Pepe2", "pepe2", 40, "Guitar");
-        Musician musician3 = new Musician(51, "Pepe3", "pepe3", 41, "Bass Guitar");
+        Musician musician = new Musician(63, "Pepe", "pepe", 21, 798, "Singer");
+        Musician musician2 = new Musician(52, "Pepe2", "pepe2", 40, 799, "Guitar");
+        Musician musician3 = new Musician(51, "Pepe3", "pepe3", 41, 800, "Bass Guitar");
         band.addBandMember(musician);
         band.addBandMember(musician2);
         band.addBandMember(musician3);
@@ -26,7 +26,7 @@ public class JaxbRunner {
 
 //        Person person = new Person(269, "Juan", "Simon", 21);
         try {
-            File file = new File("musichall/src/main/java/com/solvd/musichall/parsers/jaxb/band.xml");
+            File file = new File("musichall/src/main/resources/outputFiles/band.xml");
             JAXBContext c = JAXBContext.newInstance(Band.class);
 
             // Marshall

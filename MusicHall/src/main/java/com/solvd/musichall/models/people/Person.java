@@ -46,19 +46,19 @@ public class Person {
      * Getters and Setters
      */
 
-    public String getPersonName() {
+    public String getName() {
         return this.name;
     }
 
-    public String getPersonLastname() {
+    public String getLastname() {
         return lastname;
     }
 
-    public int getPersonAge() {
+    public int getAge() {
         return age;
     }
 
-    public int getPersonId() {
+    public int getId() {
         return personId;
     }
 

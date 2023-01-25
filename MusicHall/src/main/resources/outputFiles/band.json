@@ -1,0 +1,32 @@
+{
+  "bandID": 34,
+  "name": "Metallica",
+  "genre": "Metal",
+  "membersAmount": 3,
+  "members": [
+    {
+      "name": "Pepe",
+      "lastname": "pepe",
+      "age": 21,
+      "musicianId": 63,
+      "id": 798,
+      "role": "Singer"
+    },
+    {
+      "name": "Pepe2",
+      "lastname": "pepe2",
+      "age": 40,
+      "musicianId": 52,
+      "id": 799,
+      "role": "Guitar"
+    },
+    {
+      "name": "Pepe3",
+      "lastname": "pepe3",
+      "age": 41,
+      "musicianId": 51,
+      "id": 800,
+      "role": "Bass Guitar"
+    }
+  ]
+}

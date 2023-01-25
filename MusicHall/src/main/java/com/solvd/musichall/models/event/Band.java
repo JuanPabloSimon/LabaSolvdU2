@@ -1,5 +1,6 @@
 package com.solvd.musichall.models.event;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.musichall.models.people.Musician;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -9,16 +10,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @XmlRootElement(name = "band")
 public class Band {
+    @JsonProperty
     @XmlAttribute(name = "id")
     private int bandID;
+    @JsonProperty
     @XmlElement(name = "bandName")
     private String name;
+    @JsonProperty
     @XmlElement(name = "genre")
     private String genre;
+    @JsonProperty
     @XmlElement(name = "membersAmount")
     private int membersAmount;
+    @JsonProperty
     @XmlElementWrapper(name = "members")
     @XmlElement(name = "musician")
     private List<Musician> members;
@@ -57,23 +64,23 @@ public class Band {
      * Getters and Setters
      */
 
-    public int getBandBandID() {
+    public int getBandID() {
         return bandID;
     }
 
-    public String getBandName() {
+    public String getName() {
         return name;
     }
 
-    public String getBandGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public int getBandMembersAmount() {
+    public int getMembersAmount() {
         return membersAmount;
     }
 
-    public List<Musician> getBandMembers() {
+    public List<Musician> getMembers() {
         return members;
     }
 

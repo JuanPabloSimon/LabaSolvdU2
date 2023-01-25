@@ -39,14 +39,14 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public Person create(Person person) {
-        LOGGER.info(String.format("Creating Person, id: %d", person.getPersonId()));
+        LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
         try {
             String q = "INSERT INTO Person (name, lastname, age) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(q);
 
-            statement.setString(1, person.getPersonName());
-            statement.setString(2, person.getPersonLastname());
-            statement.setInt(3, person.getPersonAge());
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getLastname());
+            statement.setInt(3, person.getAge());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
@@ -56,15 +56,15 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
 
     @Override
     public Person update(Person person) {
-        LOGGER.info(String.format("Updating person with id: %d", person.getPersonId()));
+        LOGGER.info(String.format("Updating person with id: %d", person.getId()));
         try {
             String q = "UPDATE Persons SET name = ?, lasName=?, age = ?, WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(q);
 
-            statement.setString(1, person.getPersonName());
-            statement.setString(2, person.getPersonLastname());
-            statement.setInt(3, person.getPersonAge());
-            statement.setInt(4, person.getPersonId());
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getLastname());
+            statement.setInt(3, person.getAge());
+            statement.setInt(4, person.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
