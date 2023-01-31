@@ -3,12 +3,14 @@ package com.solvd.musichall.models.event;
 import com.solvd.musichall.models.services.ConcertService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Concert {
     private int concertID;
     private float duration;
     private Band band;
+    private Date date;
     private List<Ticket> audience;
     private List<ConcertService> services;
 
@@ -28,17 +30,19 @@ public class Concert {
 
     }
 
-    public Concert(float duration, Band band) {
+    public Concert(int concertID, float duration, Date date) {
+        this.concertID = concertID;
         this.duration = duration;
-        this.band = band;
+        this.date = date;
         this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }
 
-    public Concert(int concertID, float duration, Band band) {
+    public Concert(int concertID, float duration, Band band, Date date) {
         this.concertID = concertID;
         this.duration = duration;
         this.band = band;
+        this.date = date;
         this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }
@@ -54,6 +58,11 @@ public class Concert {
     public float getDuration() {
         return duration;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
 
     public Band getBand() {
         return band;
@@ -79,6 +88,10 @@ public class Concert {
         this.band = band;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     /*
      * Override methods
      */
@@ -89,6 +102,7 @@ public class Concert {
                 "concertID=" + concertID +
                 ", duration=" + duration +
                 ", band=" + band +
+                ", date=" + date +
                 ", audience=" + audience +
                 ", services=" + services +
                 '}';

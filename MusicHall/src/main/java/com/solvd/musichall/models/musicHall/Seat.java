@@ -50,4 +50,13 @@ public class Seat {
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
     }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "seatID=" + seatID +
+                ", numeration=" + numeration +
+                ", reserved=" + reserved +
+                '}';
+    }
 }

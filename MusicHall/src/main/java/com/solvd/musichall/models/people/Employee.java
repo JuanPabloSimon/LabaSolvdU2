@@ -12,13 +12,13 @@ public class Employee extends Person {
         super();
     }
 
-    public Employee(String name, String lastname, int id, String role) {
-        super(name, lastname, id);
+    public Employee(String name, String lastname, int id, String role, int age) {
+        super(id, name, lastname, age);
         this.role = role;
     }
 
-    public Employee(int employeeID, String name, String lastname, int id, String role) {
-        super(name, lastname, id);
+    public Employee(int employeeID, String name, String lastname, int id, String role, int age) {
+        super(id, name, lastname, age);
         this.employeeID = employeeID;
         this.role = role;
     }
@@ -37,6 +37,10 @@ public class Employee extends Person {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setEmployeeID(int employeeID) {
+        this.employeeID = employeeID;
     }
 
     /*

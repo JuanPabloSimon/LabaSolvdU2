@@ -18,7 +18,8 @@ public class Ticket {
     public Ticket() {
     }
 
-    public Ticket(float value) {
+    public Ticket(int ticketID, float value) {
+        this.ticketID = ticketID;
         this.value = value;
     }
 

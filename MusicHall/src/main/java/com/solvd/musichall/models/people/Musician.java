@@ -2,11 +2,10 @@ package com.solvd.musichall.models.people;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name = "musician")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Musician extends Person {
     @JsonProperty("musicianId")
     @XmlAttribute(name = "id")
@@ -51,6 +50,9 @@ public class Musician extends Person {
         this.role = role;
     }
 
+    public void setMusicianID(int musicianID) {
+        this.musicianID = musicianID;
+    }
 
     /*
      * Override methods

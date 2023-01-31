@@ -3,15 +3,13 @@ package com.solvd.musichall.models.event;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.solvd.musichall.models.people.Musician;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @XmlRootElement(name = "band")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Band {
     @JsonProperty
     @XmlAttribute(name = "id")

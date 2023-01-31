@@ -19,21 +19,23 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     @Override
     public MusicHall getByID(int id) {
         LOGGER.info(String.format("Searching MusicHall with id: %d", id));
+        MusicHall m = null;
         try {
             String query = "SELECT * FROM MusicHall WHERE idMusicHall=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-
-            return new MusicHall(
-                    resultSet.getInt("idMusicHall"),
-                    resultSet.getString("name"),
-                    resultSet.getInt("scenariosAmount")
-            );
+            while (resultSet.next()) {
+                m = new MusicHall(
+                        resultSet.getInt("idMusicHall"),
+                        resultSet.getString("name"),
+                        resultSet.getInt("scenariosAmount")
+                );
+            }
         } catch (SQLException e) {
             LOGGER.info(e.getMessage(), e);
         }
-        return null;
+        return m;
     }
 
     @Override
@@ -46,6 +48,11 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
             statement.setString(1, musicHall.getName());
             statement.setInt(2, musicHall.getScenariosAmount());
             statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while (resultSet.next()) {
+                musicHall.setId(resultSet.getInt(1));
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }

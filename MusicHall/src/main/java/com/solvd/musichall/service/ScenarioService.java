@@ -25,8 +25,8 @@ public class ScenarioService {
         this.connection = connection;
         this.sDAO = new ScenarioDAO(connection);
         this.mDAO = new MusicHallDAO(connection);
-        this.cDAO = new ConcertDAO();
-        this.seatDAO = new SeatsDAO();
+        this.cDAO = new ConcertDAO(connection);
+        this.seatDAO = new SeatsDAO(connection);
         this.cleanDAO = new CleanServiceDAO();
     }
 
@@ -40,10 +40,10 @@ public class ScenarioService {
         for (Seat seat : seats) {
             scenario.addSeats(seat);
         }
-        ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
-        for (CleanService cleanService : cleanServices) {
-            scenario.addCleanService(cleanService);
-        }
+//        ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
+//        for (CleanService cleanService : cleanServices) {
+//            scenario.addCleanService(cleanService);
+//        }
         return scenario;
     }
 

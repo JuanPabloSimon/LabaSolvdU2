@@ -1,4 +1,5 @@
 package com.solvd.musichall.models.services;
+
 public class CleanService {
     private int cleanServiceID;
     private String name;

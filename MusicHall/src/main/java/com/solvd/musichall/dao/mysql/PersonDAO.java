@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PersonDAO extends MySQLDAO implements IPersonDAO {
     private static final Logger LOGGER = LogManager.getLogger(PersonDAO.class);
@@ -20,34 +19,42 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     @Override
     public Person getByID(int id) {
         LOGGER.info(String.format("Searching Person with id: %d", id));
+        Person p = null;
         try {
-            String q = "SELECT * FROM Person WHERE idPerson=?";
+            String q = "select * from person where idPerson = ?";
             PreparedStatement statement = connection.prepareStatement(q);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            return new Person(
-                    resultSet.getInt("idPerson"),
-                    resultSet.getString("name"),
-                    resultSet.getString("lastName"),
-                    resultSet.getInt("age")
-            );
-        } catch (SQLException sqle) {
-            LOGGER.error(sqle.getMessage(), sqle);
+            while (resultSet.next()) {
+                p = new Person(
+                        resultSet.getInt("idPerson"),
+                        resultSet.getString("name"),
+                        resultSet.getString("lastname"),
+                        resultSet.getInt("age")
+                );
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
         }
-        return null;
+        return p;
     }
 
     @Override
     public Person create(Person person) {
         LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
         try {
-            String q = "INSERT INTO Person (name, lastname, age) VALUES (?, ?, ?)";
+            String q = "INSERT INTO person (name, lastname, age) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(q);
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getLastname());
             statement.setInt(3, person.getAge());
             statement.executeUpdate();
+
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while (resultSet.next()) {
+                person.setId(resultSet.getInt(1));
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -58,7 +65,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     public Person update(Person person) {
         LOGGER.info(String.format("Updating person with id: %d", person.getId()));
         try {
-            String q = "UPDATE Persons SET name = ?, lasName=?, age = ?, WHERE idPerson= ?";
+            String q = "UPDATE person SET name = ?, lasName=?, age = ?, WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(q);
 
             statement.setString(1, person.getName());
@@ -76,7 +83,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting person with id: %d.", id));
         try {
-            String query = "DELETE FROM Persons WHERE idPerson= ?";
+            String query = "DELETE FROM persons WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, id);
@@ -87,9 +94,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     }
 
     @Override
-    public List<Person> getAll() {
+    public ArrayList<Person> getAll() {
         LOGGER.info("Finding all Persons.");
-        List<Person> persons = new ArrayList<>();
+        ArrayList<Person> persons = new ArrayList<>();
         try {
             String query = "SELECT * FROM person";
             Statement statement = connection.createStatement();
