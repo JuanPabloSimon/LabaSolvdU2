@@ -102,12 +102,12 @@ public class Scenario {
 
     @Override
     public String toString() {
-        return "Scenario{" +
-                "scenarioID=" + scenarioID +
-                ", name='" + name + '\'' +
-                ", capability=" + capability +
-                ", concerts=" + concerts +
-                ", seats=" + seats +
-                '}';
+        return "Scenario{ \n" +
+                " scenarioID=" + scenarioID +
+                ",\n name='" + name + '\'' +
+                ",\n capability=" + capability +
+                ",\n concerts=" + concerts +
+                ",\n seats=" + seats +
+                "\n}";
     }
 }

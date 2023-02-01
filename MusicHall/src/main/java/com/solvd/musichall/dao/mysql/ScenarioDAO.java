@@ -23,7 +23,7 @@ public class ScenarioDAO extends MySQLDAO implements IScenarioDAO {
         LOGGER.info(String.format("Searching Scenario with id: %d", id));
         Scenario s = null;
         try {
-            String query = "SELECT * FROM scenarioroom WHERE idScenario=?";
+            String query = "SELECT * FROM scenarioRoom WHERE idScenario=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();

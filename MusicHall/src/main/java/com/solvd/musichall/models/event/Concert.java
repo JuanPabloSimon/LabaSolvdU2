@@ -38,13 +38,21 @@ public class Concert {
         this.services = new ArrayList<>();
     }
 
-    public Concert(int concertID, float duration, Band band, Date date) {
+    public Concert(int concertID, float duration, Date date, Band band) {
         this.concertID = concertID;
         this.duration = duration;
         this.band = band;
         this.date = date;
         this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
+    }
+
+    /*
+      Methods
+     */
+
+    public void addTicket(Ticket t) {
+        this.audience.add(t);
     }
 
     /*
@@ -98,13 +106,13 @@ public class Concert {
 
     @Override
     public String toString() {
-        return "Concert{" +
-                "concertID=" + concertID +
-                ", duration=" + duration +
-                ", band=" + band +
-                ", date=" + date +
-                ", audience=" + audience +
-                ", services=" + services +
-                '}';
+        return "Concert{\n" +
+                "  concertID=" + concertID +
+                ",\n  duration=" + duration +
+                ",\n  band=" + band +
+                ",\n  date=" + date +
+                ",\n  audience=" + audience +
+                ",\n  services=" + services +
+                "}\n";
     }
 }

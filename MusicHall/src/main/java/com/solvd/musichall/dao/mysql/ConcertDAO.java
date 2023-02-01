@@ -1,6 +1,7 @@
 package com.solvd.musichall.dao.mysql;
 
 import com.solvd.musichall.dao.IConcertDAO;
+import com.solvd.musichall.models.event.Band;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.musicHall.Scenario;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +24,7 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
         LOGGER.info(String.format("Searching Concert with id: %d", id));
         Concert c = null;
         try {
-            String query = "Select * From Concert Where idConcert= ?";
+            String query = "select * from concert as c inner join bands as b on c.Bands_idBands = b.idBands where idConcert = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -31,7 +32,13 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
                 c = new Concert(
                         resultSet.getInt("idConcert"),
                         resultSet.getFloat("durationMin"),
-                        resultSet.getDate("date")
+                        resultSet.getDate("date"),
+                        new Band(
+                                resultSet.getInt("idBands"),
+                                resultSet.getString("name"),
+                                resultSet.getString("genre"),
+                                resultSet.getInt("membersAmount")
+                        )
                 );
             }
         } catch (SQLException e) {
@@ -106,7 +113,7 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
         ArrayList<Concert> concerts = new ArrayList<>();
 
         try {
-            String query = "Select * from concert";
+            String query = "select * from concert as c inner join bands as b on c.Bands_idBands = b.idBands";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
@@ -114,7 +121,13 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
                 concerts.add(new Concert(
                         resultSet.getInt("idConcert"),
                         resultSet.getFloat("durationMin"),
-                        resultSet.getDate("date")
+                        resultSet.getDate("date"),
+                        new Band(
+                                resultSet.getInt("idBands"),
+                                resultSet.getString("name"),
+                                resultSet.getString("genre"),
+                                resultSet.getInt("membersAmount")
+                        )
                 ));
             }
         } catch (SQLException e) {
@@ -130,7 +143,7 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
         ArrayList<Concert> concerts = new ArrayList<>();
 
         try {
-            String query = "Select * from concert where ScenarioRoom_idScenario= ?";
+            String query = "select * from concert as c inner join bands as b on c.Bands_idBands = b.idBands where ScenarioRoom_idScenario = ?";
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setInt(1, id);
@@ -140,7 +153,13 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
                 concerts.add(new Concert(
                         resultSet.getInt("idConcert"),
                         resultSet.getFloat("durationMin"),
-                        resultSet.getDate("date")
+                        resultSet.getDate("date"),
+                        new Band(
+                                resultSet.getInt("idBands"),
+                                resultSet.getString("name"),
+                                resultSet.getString("genre"),
+                                resultSet.getInt("membersAmount")
+                        )
                 ));
             }
         } catch (SQLException e) {

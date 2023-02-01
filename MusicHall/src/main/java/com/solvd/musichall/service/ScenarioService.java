@@ -1,6 +1,9 @@
 package com.solvd.musichall.service;
 
-import com.solvd.musichall.dao.mysql.*;
+import com.solvd.musichall.dao.mysql.CleanServiceDAO;
+import com.solvd.musichall.dao.mysql.MusicHallDAO;
+import com.solvd.musichall.dao.mysql.ScenarioDAO;
+import com.solvd.musichall.dao.mysql.SeatsDAO;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.musicHall.Scenario;
 import com.solvd.musichall.models.musicHall.Seat;
@@ -16,7 +19,7 @@ public class ScenarioService {
     private final Connection connection;
     private ScenarioDAO sDAO;
     private MusicHallDAO mDAO;
-    private ConcertDAO cDAO;
+    private ConcertService cService;
     private SeatsDAO seatDAO;
     private CleanServiceDAO cleanDAO;
 
@@ -25,14 +28,14 @@ public class ScenarioService {
         this.connection = connection;
         this.sDAO = new ScenarioDAO(connection);
         this.mDAO = new MusicHallDAO(connection);
-        this.cDAO = new ConcertDAO(connection);
+        this.cService = new ConcertService(connection);
         this.seatDAO = new SeatsDAO(connection);
         this.cleanDAO = new CleanServiceDAO();
     }
 
     public Scenario getScenarioById(int id) {
         Scenario scenario = sDAO.getByID(id);
-        ArrayList<Concert> concerts = cDAO.getConcertsByScenarioID(id);
+        ArrayList<Concert> concerts = cService.getConcertByScenarioId(id);
         for (Concert concert : concerts) {
             scenario.addConcert(concert);
         }
@@ -54,7 +57,7 @@ public class ScenarioService {
     public ArrayList<Scenario> getAllScenarios() {
         ArrayList<Scenario> scenarios = sDAO.getAll();
         for (Scenario scenario : scenarios) {
-            ArrayList<Concert> concerts = cDAO.getConcertsByScenarioID(scenario.getScenarioID());
+            ArrayList<Concert> concerts = cService.getConcertByScenarioId(scenario.getScenarioID());
             for (Concert concert : concerts) {
                 scenario.addConcert(concert);
             }
@@ -73,7 +76,7 @@ public class ScenarioService {
     public ArrayList<Scenario> getAllScenariosByMusicHallId(int id) {
         ArrayList<Scenario> scenarios = sDAO.getScenariosByMusicHallID(id);
         for (Scenario scenario : scenarios) {
-            ArrayList<Concert> concerts = cDAO.getConcertsByScenarioID(id);
+            ArrayList<Concert> concerts = cService.getConcertByScenarioId(id);
             for (Concert concert : concerts) {
                 scenario.addConcert(concert);
             }

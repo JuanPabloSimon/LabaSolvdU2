@@ -34,9 +34,9 @@ public class ConnectionPool {
 
         LOGGER.info("Creating connection pool to MySQL database");
         dataSource.setDriverClassName(properties.getProperty("driver"));
-        dataSource.setUrl(URL);
-        dataSource.setUsername(USER);
-        dataSource.setPassword(PASSWORD);
+        dataSource.setUrl(properties.getProperty("remote_url"));
+        dataSource.setUsername(properties.getProperty("usernameR"));
+        dataSource.setPassword(properties.getProperty("passwordR"));
         dataSource.setInitialSize(5);
     }
 

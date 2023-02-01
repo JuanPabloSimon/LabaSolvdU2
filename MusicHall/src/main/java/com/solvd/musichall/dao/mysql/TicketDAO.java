@@ -3,6 +3,8 @@ package com.solvd.musichall.dao.mysql;
 import com.solvd.musichall.dao.ITicketDAO;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.event.Ticket;
+import com.solvd.musichall.models.musicHall.Seat;
+import com.solvd.musichall.models.people.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,14 +25,29 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
         LOGGER.info(String.format("Searching Ticket with id: %d", id));
         Ticket t = null;
         try {
-            String query = "select * from tickets where idTickets = ?";
+            String query = "select * from tickets as t " +
+                    "inner join person as p on t.Person_idPerson = p.idPerson " +
+                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
+                    "where idTickets = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 t = new Ticket(
                         resultSet.getInt("idTickets"),
-                        resultSet.getFloat("value")
+                        resultSet.getFloat("value"),
+                        new Person(
+                                resultSet.getInt("idPerson"),
+                                resultSet.getString("name"),
+                                resultSet.getString("lastname"),
+                                resultSet.getInt("age")
+                        ),
+                        new Seat(
+                                resultSet.getInt("idSeats"),
+                                resultSet.getInt("number"),
+                                resultSet.getBoolean("reserved")
+
+                        )
                 );
             }
         } catch (SQLException e) {
@@ -100,13 +117,27 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
         LOGGER.info("Getting all tickets");
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
         try {
-            String query = "select * from tickets";
+            String query = "select * from tickets as t " +
+                    "inner join person as p on t.Person_idPerson = p.idPerson " +
+                    "inner join seats as s on t.Seats_idSeats = s.idSeats";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 tickets.add(new Ticket(
                         resultSet.getInt("idTickets"),
-                        resultSet.getFloat("value")
+                        resultSet.getFloat("value"),
+                        new Person(
+                                resultSet.getInt("idPerson"),
+                                resultSet.getString("name"),
+                                resultSet.getString("lastname"),
+                                resultSet.getInt("age")
+                        ),
+                        new Seat(
+                                resultSet.getInt("idSeats"),
+                                resultSet.getInt("number"),
+                                resultSet.getBoolean("reserved")
+
+                        )
                 ));
             }
         } catch (SQLException e) {
@@ -120,14 +151,29 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
         LOGGER.info(String.format("Searching Ticket by concertId: %d", id));
         ArrayList<Ticket> tickets = new ArrayList<>();
         try {
-            String query = "select * from tickets where Concert_idConcert = ?";
+            String query = "select * from tickets as t " +
+                    "inner join person as p on t.Person_idPerson = p.idPerson " +
+                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
+                    "where Concert_idConcert = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 tickets.add(new Ticket(
                         resultSet.getInt("idTickets"),
-                        resultSet.getFloat("value")
+                        resultSet.getFloat("value"),
+                        new Person(
+                                resultSet.getInt("idPerson"),
+                                resultSet.getString("name"),
+                                resultSet.getString("lastname"),
+                                resultSet.getInt("age")
+                        ),
+                        new Seat(
+                                resultSet.getInt("idSeats"),
+                                resultSet.getInt("number"),
+                                resultSet.getBoolean("reserved")
+
+                        )
                 ));
             }
         } catch (SQLException e) {
@@ -141,14 +187,29 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
         LOGGER.info(String.format("Searching Musician by BandId: %d", id));
         Ticket t = null;
         try {
-            String query = "select * from tickets where Person_idPerson = ?";
+            String query = "select * from tickets as t " +
+                    "inner join person as p on t.Person_idPerson = p.idPerson " +
+                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
+                    "where Person_idPerson = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 t = new Ticket(
                         resultSet.getInt("idTickets"),
-                        resultSet.getFloat("value")
+                        resultSet.getFloat("value"),
+                        new Person(
+                                resultSet.getInt("idPerson"),
+                                resultSet.getString("name"),
+                                resultSet.getString("lastname"),
+                                resultSet.getInt("age")
+                        ),
+                        new Seat(
+                                resultSet.getInt("idSeats"),
+                                resultSet.getInt("number"),
+                                resultSet.getBoolean("reserved")
+
+                        )
                 );
             }
         } catch (SQLException e) {
