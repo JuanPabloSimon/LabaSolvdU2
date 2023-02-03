@@ -26,17 +26,17 @@ public class ConnectionPool {
     private ConnectionPool() throws SQLException {
         LOGGER.info("Reading properties file.");
         Properties properties = new Properties();
-        try (InputStream inputStream = Files.newInputStream(Paths.get("musichall/src/main/resources/mysqlDB.properties"))) {
+        try (InputStream inputStream = Files.newInputStream(Paths.get("musichall/src/main/resources/db.properties"))) {
             properties.load(inputStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         LOGGER.info("Creating connection pool to MySQL database");
-        dataSource.setDriverClassName(properties.getProperty("driver"));
-        dataSource.setUrl(properties.getProperty("remote_url"));
-        dataSource.setUsername(properties.getProperty("usernameR"));
-        dataSource.setPassword(properties.getProperty("passwordR"));
+        dataSource.setDriverClassName(properties.getProperty("db.driver"));
+        dataSource.setUrl(properties.getProperty("db.remote_url"));
+        dataSource.setUsername(properties.getProperty("db.usernameR"));
+        dataSource.setPassword(properties.getProperty("db.passwordR"));
         dataSource.setInitialSize(5);
     }
 

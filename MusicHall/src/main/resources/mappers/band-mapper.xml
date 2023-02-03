@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.musichall.dao.IBandDAO">
+    <sql id="body">
+        b.idBands as band_id,
+        b.name as band_name,
+        b.membersAmount as band_memberAmount,
+        b.genre as band_genre
+    </sql>
+    <select id="getByID" resultMap="bandResultMap" resultType="com.solvd.musichall.models.event.Band">
+        SELECT
+        <include refid="body"/>
+        FROM bands WHERE idBands = #{id}
+    </select>
+    <resultMap id="bandResultMap" type="com.solvd.musichall.models.event.Band" autoMapping="false">
+        <id column="band_id" property="bandID"/>
+        <result column="band_name" property="name"/>
+        <result column="band_genre" property="genre"/>
+        <result column="band_memberAmount" property="membersAmount"/>
+        <collection property="members" ofType="Musician"
+                    resultMap="com.solvd.musichall.dao.IBandDAO.bandResultMap"/>
+    </resultMap>
+</mapper>

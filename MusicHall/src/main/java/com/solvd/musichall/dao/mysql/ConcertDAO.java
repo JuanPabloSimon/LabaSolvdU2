@@ -57,7 +57,7 @@ public class ConcertDAO extends MySQLDAO implements IConcertDAO {
         try {
             String query = "Insert into scenarioRoom (durationMin,Bands_idBands, ScenarioRoom_idScenario, date) values" +
                     "(?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setFloat(1, concert.getDuration());
             statement.setInt(2, concert.getBand().getBandID());
             statement.setInt(3, scenario.getScenarioID());

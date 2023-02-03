@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.musichall.dao.IPersonDAO">
+    <select id="getAll" resultType="personResultMap">
+        SELECT * FROM person
+    </select>
+    <resultMap id="personResultMap" type="com.solvd.musichall.models.people.Person"
+               autoMapping="false">
+        <id column="idPerson" property="personId"/>
+        <result column="name" property="name"/>
+        <result column="lastname" property="lastname"/>
+        <result column="age" property="age"/>
+    </resultMap>
+</mapper>

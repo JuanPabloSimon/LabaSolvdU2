@@ -3,22 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties resource="mysqlDB.properties"/>
+    <properties resource="db.properties"/>
     <environments default="development">
         <environment id="development">
-            <transactionManager type="JDBC">
-                <property name="defaultReadOnly" value="false"/>
-            </transactionManager>
+            <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
-                <property name="driver" value="${driver}"/>
-                <property name="url" value="${local_url}"/>
-                <property name="username" value="${userL}"/>
-                <property name="password" value="${passwordL}"/>
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.remote_url}"/>
+                <property name="username" value="${db.usernameR}"/>
+                <property name="password" value="${db.passwordR}"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="db/mapper/user-mapper.xml"/>
-        <mapper resource="db/mapper/car-mapper.xml"/>
+        <mapper resource="mappers/person-mapper.xml"/>
+        <!--        <mapper resource="mappers/band-mapper.xml"/>-->
+        <!--        <mapper resource="mappers/musician-mapper.xml"/>-->
     </mappers>
 </configuration>

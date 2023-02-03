@@ -49,7 +49,7 @@ public class ScenarioDAO extends MySQLDAO implements IScenarioDAO {
         LOGGER.info(String.format("Creating  a new Scenario named: %s", scenario.getName()));
         try {
             String query = "INSERT INTO ScenarioRoom (name, capability, MusicHall_idMusicHall) VALUES (?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, scenario.getName());
             statement.setInt(2, scenario.getCapability());

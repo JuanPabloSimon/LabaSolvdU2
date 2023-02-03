@@ -42,10 +42,10 @@ public class BandDAO extends MySQLDAO implements IBandDAO {
 
     @Override
     public Band create(Band band) {
-        LOGGER.info(String.format("Creating Band, id: %d", band.getBandID()));
+        LOGGER.info(String.format("Creating Band, name: %s", band.getName()));
         try {
             String query = "insert into bands (name, membersAmount, genre) values (?, ?, ?) ";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, band.getName());
             statement.setInt(2, band.getMembersAmount());
             statement.setString(3, band.getGenre());

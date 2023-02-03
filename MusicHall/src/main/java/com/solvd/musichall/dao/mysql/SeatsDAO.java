@@ -48,7 +48,7 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
         LOGGER.info("Creating seat");
         try {
             String query = "insert into seats (number, reserved, Scenario_idScenario) values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, seat.getNumeration());
             statement.setBoolean(2, seat.isReserved());
             statement.setInt(2, scenario.getScenarioID());

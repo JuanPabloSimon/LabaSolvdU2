@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BandService {
     private final static Logger LOGGER = LogManager.getLogger(BandDAO.class);
@@ -27,6 +28,15 @@ public class BandService {
         ArrayList<Musician> musicians = mDAO.getMusiciansbyBandId(id);
         for (Musician m : musicians) {
             band.addBandMember(m);
+        }
+        return band;
+    }
+
+    public Band create(Band band) {
+        bDAO.create(band);
+        List<Musician> members = band.getMembers();
+        for (Musician m : members) {
+            mDAO.create(m);
         }
         return band;
     }

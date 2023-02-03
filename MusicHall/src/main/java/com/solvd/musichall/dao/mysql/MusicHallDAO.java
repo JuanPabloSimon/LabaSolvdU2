@@ -43,7 +43,7 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
         LOGGER.info(String.format("Creating MusicHall, id: %d.", musicHall.getId()));
         try {
             String q = "INSERT INTO MusicHall (name, scenariosAmount) VALUES (?, ?)";
-            PreparedStatement statement = connection.prepareStatement(q);
+            PreparedStatement statement = connection.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, musicHall.getName());
             statement.setInt(2, musicHall.getScenariosAmount());

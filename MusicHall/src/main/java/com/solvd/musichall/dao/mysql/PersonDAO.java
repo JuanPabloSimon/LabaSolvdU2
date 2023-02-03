@@ -44,7 +44,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
         LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
         try {
             String q = "INSERT INTO person (name, lastname, age) VALUES (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(q);
+            PreparedStatement statement = connection.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getLastname());

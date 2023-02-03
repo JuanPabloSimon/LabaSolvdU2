@@ -55,7 +55,7 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
         try {
             String query = "Insert into employees (role, Person_idPerson, MusicHall_idMusicHall) " +
                     "values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, employee.getRole());
             statement.setInt(2, employee.getId());

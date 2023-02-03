@@ -65,7 +65,7 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
         LOGGER.info("Creating Ticket");
         try {
             String query = "insert into tickets (value, Concert_idConcert, Person_idPerson, Seats_idSeats) values (?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setFloat(1, ticket.getValue());
             statement.setInt(2, concert.getConcertID());
             statement.setInt(2, ticket.getPerson().getId());

@@ -53,7 +53,7 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
         LOGGER.info("Creating musician");
         try {
             String query = "insert into musician (Person_idPerson, Band_idBand, role) values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, musician.getId());
             statement.setInt(2, band.getBandID());
             statement.setString(2, musician.getRole());

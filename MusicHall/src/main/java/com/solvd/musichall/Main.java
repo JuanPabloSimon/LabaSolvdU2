@@ -1,5 +1,7 @@
 package com.solvd.musichall;
 
+import com.solvd.musichall.models.event.Band;
+import com.solvd.musichall.models.people.Musician;
 import com.solvd.musichall.service.BandService;
 import com.solvd.musichall.service.ConcertService;
 import com.solvd.musichall.service.ScenarioService;
@@ -20,12 +22,28 @@ public class Main {
 
         // BAND TEST
         BandService bandService = new BandService(c);
+
+
+        /* Create */
+        Band band = new Band("Metallica", "Metal", 3);
+        Musician musician = new Musician(63, "Pepe", "pepe", 21, 798, "Singer");
+        Musician musician2 = new Musician(52, "Pepe2", "pepe2", 40, 799, "Guitar");
+        Musician musician3 = new Musician(51, "Pepe3", "pepe3", 41, 800, "Bass Guitar");
+        band.addBandMember(musician);
+        band.addBandMember(musician2);
+        band.addBandMember(musician3);
+        LOGGER.info("Band Created: \n" + bandService.create(band).getBandID());
+        LOGGER.info("-------------------");
+        /* Select */
         LOGGER.info("Band found:\n" + bandService.getBandById(2));
+        LOGGER.info("-------------------");
+
 
         // CONCERT TEST
         ConcertService concertService = new ConcertService(c);
-        LOGGER.info("Concert found:\n" + concertService.getById(1));
+
         LOGGER.info("Concert found:\n" + concertService.getConcertByScenarioId(1));
+        LOGGER.info("-------------------");
 
         // SCENARIO TEST
         ScenarioService scenarioService = new ScenarioService(c);
