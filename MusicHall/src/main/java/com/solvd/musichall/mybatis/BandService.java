@@ -11,8 +11,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 
-public class BandService {
+public class BandService implements IBandDAO {
     private static final Logger LOGGER = LogManager.getLogger(BandService.class);
     private static SqlSessionFactory sqlSessionFactory;
 
@@ -25,14 +26,33 @@ public class BandService {
         }
     }
 
+    @Override
     public Band getByID(int id) {
         Band band = null;
         try (SqlSession session = sqlSessionFactory.openSession()) {
             IBandDAO scientistDAO = session.getMapper(IBandDAO.class);
-            band = scientistDAO.getByID(id);//this doesn't get the scientist with its Assistants collections
-
-            LOGGER.info("Get all Scientist finish successfully");
+            band = scientistDAO.getByID(id);
         }
         return band;
+    }
+
+    @Override
+    public Band create(Band band) {
+        return null;
+    }
+
+    @Override
+    public Band update(Band band) {
+        return null;
+    }
+
+    @Override
+    public void deleteByID(int id) {
+
+    }
+
+    @Override
+    public List<Band> getAll() {
+        return null;
     }
 }

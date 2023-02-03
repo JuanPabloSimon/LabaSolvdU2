@@ -8,10 +8,10 @@
         b.membersAmount as band_memberAmount,
         b.genre as band_genre
     </sql>
-    <select id="getByID" resultMap="bandResultMap" resultType="com.solvd.musichall.models.event.Band">
+    <select id="getByID" resultMap="bandResultMap">
         SELECT
         <include refid="body"/>
-        FROM bands WHERE idBands = #{id}
+        FROM bands AS b WHERE idBands = #{id}
     </select>
     <resultMap id="bandResultMap" type="com.solvd.musichall.models.event.Band" autoMapping="false">
         <id column="band_id" property="bandID"/>
@@ -19,6 +19,6 @@
         <result column="band_genre" property="genre"/>
         <result column="band_memberAmount" property="membersAmount"/>
         <collection property="members" ofType="Musician"
-                    resultMap="com.solvd.musichall.dao.IBandDAO.bandResultMap"/>
+                    resultMap="com.solvd.musichall.dao.IMusicianDAO.musicianResultMap"/>
     </resultMap>
 </mapper>

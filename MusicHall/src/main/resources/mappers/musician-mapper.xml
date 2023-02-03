@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.musichall.dao.IMusicianDAO">
+    <sql id="body">
+        m.idMusician as musician_id,
+        m.role as musician_role,
+        p.idPerson as musician_idPerson,
+        p.name as musician_name,
+        p.lastname as musician_lastname,
+        p.age as musician_age
+    </sql>
+    <select id="getByBandID" resultMap="musicianResultMap">
+        SELECT
+        <include refid="body"/>
+        FROM musician as m inner join person as p on m.Person_idPerson = p.idPerson
+        where m.Bands_idBands = ${id}
+    </select>
+    <resultMap id="musicianResultMap" type="com.solvd.musichall.models.people.Musician" autoMapping="false">
+        <id column="musician_id" property="musicianID"/>
+        <result column="musician_role" property="role"/>
+        <result column="musician_idPerson" property="personId"/>
+        <result column="musician_name" property="name"/>
+        <result column="musician_lastname" property="lastname"/>
+        <result column="musician_age" property="age"/>
+    </resultMap>
+</mapper>

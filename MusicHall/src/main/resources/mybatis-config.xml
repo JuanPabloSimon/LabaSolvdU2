@@ -17,7 +17,7 @@
     </environments>
     <mappers>
         <mapper resource="mappers/person-mapper.xml"/>
-        <!--        <mapper resource="mappers/band-mapper.xml"/>-->
+        <mapper resource="mappers/band-mapper.xml"/>
         <!--        <mapper resource="mappers/musician-mapper.xml"/>-->
     </mappers>
 </configuration>
