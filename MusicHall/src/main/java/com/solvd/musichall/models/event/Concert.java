@@ -55,6 +55,9 @@ public class Concert {
         this.audience.add(t);
     }
 
+    public void addService(ConcertService c) {
+        this.services.add(c);
+    }
     /*
      * Getters and Setters
      */

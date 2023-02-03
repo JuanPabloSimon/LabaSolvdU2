@@ -100,7 +100,6 @@ public class Scenario {
      * Override methods
      */
 
-    @Override
     public String toString() {
         return "Scenario{ \n" +
                 " scenarioID=" + scenarioID +
@@ -108,6 +107,8 @@ public class Scenario {
                 ",\n capability=" + capability +
                 ",\n concerts=" + concerts +
                 ",\n seats=" + seats +
+                ",\n cleanServices=" + cleanServices +
                 "\n}";
     }
+
 }

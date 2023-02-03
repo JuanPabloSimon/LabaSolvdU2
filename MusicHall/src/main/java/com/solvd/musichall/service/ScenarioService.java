@@ -30,7 +30,7 @@ public class ScenarioService {
         this.mDAO = new MusicHallDAO(connection);
         this.cService = new ConcertService(connection);
         this.seatDAO = new SeatsDAO(connection);
-        this.cleanDAO = new CleanServiceDAO();
+        this.cleanDAO = new CleanServiceDAO(connection);
     }
 
     public Scenario getScenarioById(int id) {
@@ -43,10 +43,10 @@ public class ScenarioService {
         for (Seat seat : seats) {
             scenario.addSeats(seat);
         }
-//        ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
-//        for (CleanService cleanService : cleanServices) {
-//            scenario.addCleanService(cleanService);
-//        }
+        ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
+        for (CleanService cleanService : cleanServices) {
+            scenario.addCleanService(cleanService);
+        }
         return scenario;
     }
 
@@ -76,15 +76,15 @@ public class ScenarioService {
     public ArrayList<Scenario> getAllScenariosByMusicHallId(int id) {
         ArrayList<Scenario> scenarios = sDAO.getScenariosByMusicHallID(id);
         for (Scenario scenario : scenarios) {
-            ArrayList<Concert> concerts = cService.getConcertByScenarioId(id);
+            ArrayList<Concert> concerts = cService.getConcertByScenarioId(scenario.getScenarioID());
             for (Concert concert : concerts) {
                 scenario.addConcert(concert);
             }
-            ArrayList<Seat> seats = seatDAO.getSeatByScenarioId(id);
+            ArrayList<Seat> seats = seatDAO.getSeatByScenarioId(scenario.getScenarioID());
             for (Seat seat : seats) {
                 scenario.addSeats(seat);
             }
-            ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(id);
+            ArrayList<CleanService> cleanServices = cleanDAO.getCleanServicesByScenarioID(scenario.getScenarioID());
             for (CleanService cleanService : cleanServices) {
                 scenario.addCleanService(cleanService);
             }

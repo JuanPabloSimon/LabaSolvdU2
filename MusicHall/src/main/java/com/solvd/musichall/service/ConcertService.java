@@ -1,6 +1,7 @@
 package com.solvd.musichall.service;
 
 import com.solvd.musichall.dao.mysql.ConcertDAO;
+import com.solvd.musichall.dao.mysql.ConcertServicesDAO;
 import com.solvd.musichall.dao.mysql.TicketDAO;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.event.Ticket;
@@ -16,12 +17,14 @@ public class ConcertService {
     private ConcertDAO concertDAO;
     private BandService bandService;
     private TicketDAO ticketDAO;
+    private ConcertServicesDAO concertServicesDAO;
 
     public ConcertService(Connection connection) {
         this.connection = connection;
         this.concertDAO = new ConcertDAO(connection);
         this.bandService = new BandService(connection);
         this.ticketDAO = new TicketDAO(connection);
+        this.concertServicesDAO = new ConcertServicesDAO(connection);
     }
 
     public Concert getById(int id) {
@@ -30,6 +33,10 @@ public class ConcertService {
         ArrayList<Ticket> tickets = ticketDAO.getTicketsByConcertId(id);
         for (Ticket ticket : tickets) {
             concert.addTicket(ticket);
+        }
+        ArrayList<com.solvd.musichall.models.services.ConcertService> services = concertServicesDAO.getConcertServiceByConcertId(id);
+        for (com.solvd.musichall.models.services.ConcertService service : services) {
+            concert.addService(service);
         }
         return concert;
     }
@@ -41,6 +48,10 @@ public class ConcertService {
             ArrayList<Ticket> tickets = ticketDAO.getTicketsByConcertId(id);
             for (Ticket ticket : tickets) {
                 c.addTicket(ticket);
+            }
+            ArrayList<com.solvd.musichall.models.services.ConcertService> services = concertServicesDAO.getConcertServiceByConcertId(c.getConcertID());
+            for (com.solvd.musichall.models.services.ConcertService service : services) {
+                c.addService(service);
             }
         }
         return concerts;
