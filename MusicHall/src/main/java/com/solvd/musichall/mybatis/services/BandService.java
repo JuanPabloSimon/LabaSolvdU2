@@ -53,12 +53,31 @@ public class BandService implements IBandDAO {
 
     @Override
     public void update(Band band) {
-
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IBandDAO bandDAO = session.getMapper(IBandDAO.class);
+            try {
+                bandDAO.update(band);
+                session.commit();
+                LOGGER.info("Band Updated successfully");
+            } catch (Exception e) {
+                session.rollback();
+                LOGGER.info(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
     public void deleteByID(int id) {
-
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            if (id > 0) {
+                IBandDAO bandDAO = session.getMapper(IBandDAO.class);
+                bandDAO.deleteByID(id);
+                LOGGER.info("Band Deleted successfully");
+                session.commit();
+            }
+        } catch (Exception e) {
+            LOGGER.info(e.getMessage(), e);
+        }
     }
 
     @Override
