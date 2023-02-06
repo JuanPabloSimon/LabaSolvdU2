@@ -39,6 +39,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
         return p;
     }
 
+
     @Override
     public Person create(Person person) {
         LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
@@ -65,7 +66,7 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     public Person update(Person person) {
         LOGGER.info(String.format("Updating person with id: %d", person.getId()));
         try {
-            String q = "UPDATE person SET name = ?, lasName=?, age = ?, WHERE idPerson= ?";
+            String q = "UPDATE person SET name = ?, lastName=?, age = ?, WHERE idPerson= ?";
             PreparedStatement statement = connection.prepareStatement(q);
 
             statement.setString(1, person.getName());

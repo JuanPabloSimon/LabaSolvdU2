@@ -16,6 +16,31 @@
         FROM musician as m inner join person as p on m.Person_idPerson = p.idPerson
         where m.Bands_idBands = ${id}
     </select>
+    <select id="getAll" resultMap="musicianResultMap">
+        SELECT
+        <include refid="body"/>
+        FROM musician as m inner join person as p on m.Person_idPerson = p.idPerson
+    </select>
+    <select id="getByID" resultMap="musicianResultMap">
+        SELECT
+        <include refid="body"/>
+        FROM musician as m inner join person as p on m.Person_idPerson = p.idPerson
+        where m.idMusician = ${id}
+    </select>
+    <insert id="create" useGeneratedKeys="true" keyProperty="personId"
+            parameterType="com.solvd.musichall.models.people.Musician">
+        INSERT INTO musician (Person_idPerson, role)
+        VALUES (#{personId}, #{role})
+    </insert>
+    <update id="update"
+            parameterType="com.solvd.musichall.models.people.Musician">
+        UPDATE musician SET
+        role= #{role},
+        Person_idPerson = #{personId} where idMusician = #{musicianID}
+    </update>
+    <delete id="deleteByID">
+        Delete from musician where idMusician =${id}
+    </delete>
     <resultMap id="musicianResultMap" type="com.solvd.musichall.models.people.Musician" autoMapping="false">
         <id column="musician_id" property="musicianID"/>
         <result column="musician_role" property="role"/>

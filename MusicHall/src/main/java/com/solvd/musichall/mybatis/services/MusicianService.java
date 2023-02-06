@@ -1,8 +1,8 @@
 package com.solvd.musichall.mybatis.services;
 
-import com.solvd.musichall.dao.IMusicianDAO;
 import com.solvd.musichall.models.people.Musician;
 import com.solvd.musichall.mybatis.MySessionFactory;
+import com.solvd.musichall.mybatis.interfaces.IMusicianDAO;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.logging.log4j.LogManager;
@@ -16,26 +16,69 @@ public class MusicianService implements IMusicianDAO {
 
     @Override
     public Musician getByID(int id) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IMusicianDAO musicianDAO = session.getMapper(IMusicianDAO.class);
+            Musician musician = musicianDAO.getByID(id);
+            return musician;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
         return null;
     }
 
     @Override
-    public Musician create(Musician musician) {
-        return null;
+    public void create(Musician musician) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IMusicianDAO musicianDAO = session.getMapper(IMusicianDAO.class);
+            try {
+                musicianDAO.create(musician);
+                session.commit();
+                LOGGER.info("Musician Created successfully");
+            } catch (Exception e) {
+                session.rollback();
+                LOGGER.info(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
-    public Musician update(Musician musician) {
-        return null;
+    public void update(Musician musician) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IMusicianDAO musicianDAO = session.getMapper(IMusicianDAO.class);
+            try {
+                musicianDAO.update(musician);
+                session.commit();
+                LOGGER.info("Musician Updated successfully");
+            } catch (Exception e) {
+                session.rollback();
+                LOGGER.info(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
     public void deleteByID(int id) {
-
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            if (id > 0) {
+                IMusicianDAO musicianDAO = session.getMapper(IMusicianDAO.class);
+                musicianDAO.deleteByID(id);
+                LOGGER.info("Musician Deleted successfully");
+                session.commit();
+            }
+        } catch (Exception e) {
+            LOGGER.info(e.getMessage(), e);
+        }
     }
 
     @Override
     public List<Musician> getAll() {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IMusicianDAO musicianDAO = session.getMapper(IMusicianDAO.class);
+            List<Musician> musicians = musicianDAO.getAll();
+            return musicians;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
         return null;
     }
 

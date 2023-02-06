@@ -1,7 +1,7 @@
 package com.solvd.musichall.mybatis.services;
 
-import com.solvd.musichall.dao.IBandDAO;
 import com.solvd.musichall.models.event.Band;
+import com.solvd.musichall.mybatis.interfaces.IBandDAO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -30,20 +30,30 @@ public class BandService implements IBandDAO {
     public Band getByID(int id) {
         Band band = null;
         try (SqlSession session = sqlSessionFactory.openSession()) {
-            IBandDAO scientistDAO = session.getMapper(IBandDAO.class);
-            band = scientistDAO.getByID(id);
+            IBandDAO bandDAO = session.getMapper(IBandDAO.class);
+            band = bandDAO.getByID(id);
         }
         return band;
     }
 
     @Override
-    public Band create(Band band) {
-        return null;
+    public void create(Band band) {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IBandDAO bandDAO = session.getMapper(IBandDAO.class);
+            try {
+                bandDAO.create(band);
+                session.commit();
+                LOGGER.info("Bands Created successfully");
+            } catch (Exception e) {
+                session.rollback();
+                LOGGER.info(e.getMessage(), e);
+            }
+        }
     }
 
     @Override
-    public Band update(Band band) {
-        return null;
+    public void update(Band band) {
+
     }
 
     @Override
@@ -53,6 +63,13 @@ public class BandService implements IBandDAO {
 
     @Override
     public List<Band> getAll() {
+        try (SqlSession session = sqlSessionFactory.openSession()) {
+            IBandDAO bandDAO = session.getMapper(IBandDAO.class);
+            List<Band> bands = bandDAO.getAll();
+            return bands;
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+        }
         return null;
     }
 }

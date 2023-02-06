@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
-<mapper namespace="com.solvd.musichall.dao.IPersonDAO">
+<mapper namespace="com.solvd.musichall.mybatis.interfaces.IPersonDAO">
     <select id="getAll" resultMap="personResultMap">
         SELECT * FROM person
     </select>
@@ -13,6 +13,17 @@
         INSERT INTO person (name, lastname, age)
         VALUES (#{name}, #{lastname}, #{age})
     </insert>
+    <update id="update"
+            parameterType="com.solvd.musichall.models.people.Person">
+        UPDATE person SET
+        name = #{name},
+        lastName = #{lastname},
+        age = #{age} WHERE idPerson= #{personId}
+    </update>
+    <delete id="deleteByID">
+        Delete from person where idPerson =${id}
+    </delete>
+
     <resultMap id="personResultMap" type="com.solvd.musichall.models.people.Person"
                autoMapping="false">
         <id column="idPerson" property="personId"/>
