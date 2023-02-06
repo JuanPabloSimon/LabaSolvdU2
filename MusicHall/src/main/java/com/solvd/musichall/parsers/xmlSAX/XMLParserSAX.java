@@ -1,6 +1,7 @@
 package com.solvd.musichall.parsers.xmlSAX;
 
-import com.solvd.musichall.models.event.Band;
+import com.solvd.musichall.parsers.factory.IParse;
+import com.solvd.musichall.parsers.factory.ParserTypes;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,22 +12,32 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class XMLParserSAX {
+public class XMLParserSAX implements IParse {
+    private final String extension = ParserTypes.SAX.getExtension();
+    private final SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+    private final MyHandlerBand handler = new MyHandlerBand();
 
-    public static void main(String[] args) {
-        SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+
+    @Override
+    public void marshalling(Object entity, File file) {
+
+    }
+
+    @Override
+    public Object unmarshalling(Class c, File file) {
         try {
             SAXParser saxParser = saxParserFactory.newSAXParser();
-            MyHandlerBand handler = new MyHandlerBand();
-            saxParser.parse(new File("musichall/src/main/resources/xml/band.xml"), handler);
-            // Get Employees list
-            List<Band> bandList = handler.getBandList();
-            // print employee information
-            for (Band band : bandList)
-                System.out.println(band);
+            saxParser.parse(file, handler);
+            List<Object> bandList = handler.getBandList();
+            for (Object band : bandList)
+                return band;
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
+    public String getExtension() {
+        return this.extension;
+    }
 }

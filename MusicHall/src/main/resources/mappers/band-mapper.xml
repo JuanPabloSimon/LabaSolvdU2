@@ -6,19 +6,27 @@
         b.idBands as band_id,
         b.name as band_name,
         b.membersAmount as band_memberAmount,
-        b.genre as band_genre
+        b.genre as band_genre,
+        m.idMusician as musician_id,
+        m.role as musician_role,
+        p.idPerson as musician_idPerson,
+        p.name as musician_name,
+        p.lastname as musician_lastname,
+        p.age as musician_age
     </sql>
     <select id="getByID" resultMap="bandResultMap">
         SELECT
         <include refid="body"/>
-        FROM bands AS b WHERE idBands = #{id}
+        FROM bands AS b
+        right join musician as m on b.idBands = m.Bands_idBands
+        inner join person as p on m.Person_idPerson = p.idPerson where idBands = #{id}
     </select>
     <resultMap id="bandResultMap" type="com.solvd.musichall.models.event.Band" autoMapping="false">
         <id column="band_id" property="bandID"/>
         <result column="band_name" property="name"/>
         <result column="band_genre" property="genre"/>
         <result column="band_memberAmount" property="membersAmount"/>
-        <collection property="members" ofType="Musician"
+        <collection property="members"
                     resultMap="com.solvd.musichall.dao.IMusicianDAO.musicianResultMap"/>
     </resultMap>
 </mapper>

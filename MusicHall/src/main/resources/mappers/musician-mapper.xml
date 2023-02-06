@@ -10,7 +10,7 @@
         p.lastname as musician_lastname,
         p.age as musician_age
     </sql>
-    <select id="getByBandID" resultMap="musicianResultMap">
+    <select id="getMusiciansByBandId" resultMap="musicianResultMap">
         SELECT
         <include refid="body"/>
         FROM musician as m inner join person as p on m.Person_idPerson = p.idPerson

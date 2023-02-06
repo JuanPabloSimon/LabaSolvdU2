@@ -1,4 +1,4 @@
-package com.solvd.musichall.mybatis;
+package com.solvd.musichall.mybatis.services;
 
 import com.solvd.musichall.dao.IBandDAO;
 import com.solvd.musichall.models.event.Band;

@@ -25,7 +25,7 @@ public class BandService {
 
     public Band getBandById(int id) {
         Band band = bDAO.getByID(id);
-        ArrayList<Musician> musicians = mDAO.getMusiciansbyBandId(id);
+        ArrayList<Musician> musicians = mDAO.getMusiciansByBandId(id);
         for (Musician m : musicians) {
             band.addBandMember(m);
         }

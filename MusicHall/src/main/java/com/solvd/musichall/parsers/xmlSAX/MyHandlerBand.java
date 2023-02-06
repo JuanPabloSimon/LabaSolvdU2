@@ -13,14 +13,14 @@ import java.util.List;
 public class MyHandlerBand extends DefaultHandler {
 
     // List to hold Employees object
-    private List<Band> bandList = null;
+    private List<Object> bandList = null;
     private List<Musician> musicianList = null;
     private Band band = null;
     private Musician musician = null;
     private StringBuilder data = null;
 
     // getter method for employee list
-    public List<Band> getBandList() {
+    public List<Object> getBandList() {
         return bandList;
     }
 

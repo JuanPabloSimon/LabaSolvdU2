@@ -123,7 +123,7 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     }
 
     @Override
-    public ArrayList<Musician> getMusiciansbyBandId(int id) {
+    public ArrayList<Musician> getMusiciansByBandId(int id) {
         LOGGER.info(String.format("Searching Musician by BandId: %d", id));
         ArrayList<Musician> musicians = new ArrayList<>();
         try {

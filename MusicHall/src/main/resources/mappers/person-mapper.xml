@@ -5,6 +5,14 @@
     <select id="getAll" resultMap="personResultMap">
         SELECT * FROM person
     </select>
+    <select id="getByID" resultMap="personResultMap">
+        Select * From person where idPerson = ${id}
+    </select>
+    <insert id="create" useGeneratedKeys="true" keyProperty="personId"
+            parameterType="com.solvd.musichall.models.people.Person">
+        INSERT INTO person (name, lastname, age)
+        VALUES (#{name}, #{lastname}, #{age})
+    </insert>
     <resultMap id="personResultMap" type="com.solvd.musichall.models.people.Person"
                autoMapping="false">
         <id column="idPerson" property="personId"/>

@@ -16,10 +16,10 @@ public class MySessionFactory {
 
     private MySessionFactory() {
         String resource = "mybatis-config.xml";
-        Reader reader = null;
+
 
         try {
-            reader = Resources.getResourceAsReader(resource);
+            Reader reader = Resources.getResourceAsReader(resource);
             factory = new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
