@@ -30,10 +30,10 @@ public class Concert {
 
     }
 
-    public Concert(int concertID, float duration, Date date) {
-        this.concertID = concertID;
+    public Concert(float duration, Date date, Band band) {
         this.duration = duration;
         this.date = date;
+        this.band = band;
         this.audience = new ArrayList<>();
         this.services = new ArrayList<>();
     }

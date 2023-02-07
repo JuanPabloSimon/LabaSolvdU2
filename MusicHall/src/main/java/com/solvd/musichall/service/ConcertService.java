@@ -5,11 +5,13 @@ import com.solvd.musichall.dao.mysql.ConcertServicesDAO;
 import com.solvd.musichall.dao.mysql.TicketDAO;
 import com.solvd.musichall.models.event.Concert;
 import com.solvd.musichall.models.event.Ticket;
+import com.solvd.musichall.models.musicHall.Scenario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConcertService {
     private static final Logger LOGGER = LogManager.getLogger(ConcertService.class);
@@ -37,6 +39,19 @@ public class ConcertService {
         ArrayList<com.solvd.musichall.models.services.ConcertService> services = concertServicesDAO.getConcertServiceByConcertId(id);
         for (com.solvd.musichall.models.services.ConcertService service : services) {
             concert.addService(service);
+        }
+        return concert;
+    }
+
+    public Concert create(Concert concert, Scenario s) {
+        concertDAO.create(concert, s);
+        List<Ticket> tickets = concert.getAudience();
+        for (Ticket ticket : tickets) {
+            ticketDAO.create(ticket);
+        }
+        List<com.solvd.musichall.models.services.ConcertService> services = concert.getServices();
+        for (com.solvd.musichall.models.services.ConcertService service : services) {
+            concertServicesDAO.create(service);
         }
         return concert;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "org/apache/ibatis/builder/xml/mybatis-3-mapper.dtd">
-<mapper namespace="com.solvd.musichall.dao.IMusicianDAO">
+<mapper namespace="com.solvd.musichall.mybatis.interfaces.IMusicianDAO">
     <sql id="body">
         m.idMusician as musician_id,
         m.role as musician_role,
