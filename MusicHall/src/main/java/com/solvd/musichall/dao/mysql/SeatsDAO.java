@@ -11,19 +11,14 @@ import java.util.ArrayList;
 
 public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
     private static final Logger LOGGER = LogManager.getLogger(SeatsDAO.class);
-    private final Connection connection;
-
-    public SeatsDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Seat getByID(int id) {
         LOGGER.info(String.format("Searching Seat with id: %d", id));
         Seat s = null;
-        try {
-            String query = "select * from seats where idSeats = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM seats WHERE idSeats = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -46,9 +41,9 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
 
     public Seat create(Seat seat, Scenario scenario) {
         LOGGER.info("Creating seat");
-        try {
-            String query = "insert into seats (number, reserved, Scenario_idScenario) values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO seats (number, reserved, Scenario_idScenario) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, seat.getNumeration());
             statement.setBoolean(2, seat.isReserved());
             statement.setInt(2, scenario.getScenarioID());
@@ -67,9 +62,9 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
     @Override
     public Seat update(Seat seat) {
         LOGGER.info(String.format("Updating Seat with id: %d", seat.getSeatID()));
-        try {
-            String query = "update seats set number= ?, reserved = ? where idSeats = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE seats SET number= ?, reserved = ? WHERE idSeats = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setInt(1, seat.getNumeration());
             statement.setBoolean(2, seat.isReserved());
             statement.setInt(3, seat.getSeatID());
@@ -83,9 +78,9 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting seat with id: %d", id));
-        try {
-            String query = "delete from seats where idSeats = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM seats WHERE idSeats = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -97,10 +92,10 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
     public ArrayList<Seat> getAll() {
         LOGGER.info("Getting all seats");
         ArrayList<Seat> seats = new ArrayList<Seat>();
-        try {
-            String query = "select * from seats";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM seats";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 seats.add(new Seat(
                         resultSet.getInt("idSeats"),
@@ -118,9 +113,9 @@ public class SeatsDAO extends MySQLDAO implements ISeatsDAO {
     public ArrayList<Seat> getSeatByScenarioId(int id) {
         LOGGER.info(String.format("Searching Seats by ScenarioId: %d", id));
         ArrayList<Seat> seats = new ArrayList<>();
-        try {
-            String query = "select * from seats where Scenario_idScenario = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_SCENARIO_ID = "SELECT * FROM seats WHERE Scenario_idScenario = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_SCENARIO_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

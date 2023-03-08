@@ -10,19 +10,14 @@ import java.util.ArrayList;
 
 public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     private static final Logger LOGGER = LogManager.getLogger(MusicHall.class);
-    private final Connection connection;
-
-    public MusicHallDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public MusicHall getByID(int id) {
         LOGGER.info(String.format("Searching MusicHall with id: %d", id));
         MusicHall m = null;
-        try {
-            String query = "SELECT * FROM MusicHall WHERE idMusicHall=?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM MusicHall WHERE idMusicHall=?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -41,9 +36,9 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     @Override
     public MusicHall create(MusicHall musicHall) {
         LOGGER.info(String.format("Creating MusicHall, id: %d.", musicHall.getId()));
-        try {
-            String q = "INSERT INTO MusicHall (name, scenariosAmount) VALUES (?, ?)";
-            PreparedStatement statement = connection.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO MusicHall (name, scenariosAmount) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, musicHall.getName());
             statement.setInt(2, musicHall.getScenariosAmount());
@@ -62,9 +57,9 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     @Override
     public MusicHall update(MusicHall musicHall) {
         LOGGER.info(String.format("Updating MusicHall with id: %d.", musicHall.getId()));
-        try {
-            String q = "UPDATE MusicHall SET name = ?, scenariosAmount=?, WHERE idMusicHall= ?";
-            PreparedStatement statement = connection.prepareStatement(q);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE MusicHall SET name = ?, scenariosAmount=?, WHERE idMusicHall= ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
 
             statement.setString(1, musicHall.getName());
             statement.setInt(2, musicHall.getScenariosAmount());
@@ -79,9 +74,9 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting MusicHall with id: %d", id));
-        try {
-            String query = "DELETE FROM MusicHall WHERE idMusicHall= ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM MusicHall WHERE idMusicHall= ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
 
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -94,11 +89,11 @@ public class MusicHallDAO extends MySQLDAO implements IBaseDAO<MusicHall> {
     public ArrayList<MusicHall> getAll() {
         LOGGER.info("Finding all MusicHalls.");
         ArrayList<MusicHall> musicHalls = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM MusicHall";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM MusicHall";
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next())
                 musicHalls.add(new MusicHall(
                         resultSet.getInt("idMusicHall"),

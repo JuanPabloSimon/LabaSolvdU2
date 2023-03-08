@@ -11,20 +11,14 @@ import java.util.List;
 
 public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     private static final Logger LOGGER = LogManager.getLogger(ConcertServicesDAO.class);
-    private final Connection connection;
-
-    public ConcertServicesDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public ConcertService getByID(int id) {
         LOGGER.info(String.format("Searching ConcertService with id: %d", id));
         ConcertService c = null;
-        try {
-            String query = "select * from concertService where idConcertService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM concertService WHERE idConcertService = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -43,9 +37,9 @@ public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     @Override
     public ConcertService create(ConcertService concertService) {
         LOGGER.info(String.format("Creating Concert Service, name: %s", concertService.getName()));
-        try {
-            String query = "insert into concertService (serviceName, type) values (?, ?) ";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO concertService (serviceName, type) VALUES (?, ?) ";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, concertService.getName());
             statement.setString(2, concertService.getType());
             statement.executeUpdate();
@@ -63,9 +57,9 @@ public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     @Override
     public ConcertService update(ConcertService concertService) {
         LOGGER.info(String.format("Updating Concert Service with id: %d", concertService.getConcertServiceID()));
-        try {
-            String query = "update concertService set serviceName = ?, type = ? where idConcertService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE concertService SET serviceName = ?, type = ? WHERE idConcertService = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, concertService.getName());
             statement.setString(2, concertService.getType());
             statement.setInt(3, concertService.getConcertServiceID());
@@ -79,9 +73,9 @@ public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting concertService with id: %d", id));
-        try {
-            String query = "Delete from concertService where idConcertService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM concertService WHERE idConcertService = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -93,10 +87,10 @@ public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     public List<ConcertService> getAll() {
         LOGGER.info("Getting all concertServices");
         ArrayList<ConcertService> concertServices = new ArrayList<>();
-        try {
-            String query = "Select * from concertService";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM concertService";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 concertServices.add(new ConcertService(
                         resultSet.getInt("idConcertService"),
@@ -114,11 +108,11 @@ public class ConcertServicesDAO extends MySQLDAO implements IConcertServices {
     public ArrayList<ConcertService> getConcertServiceByConcertId(int id) {
         LOGGER.info(String.format("Getting all concert services by concert id: %d", id));
         ArrayList<ConcertService> concertServices = new ArrayList<>();
-        try {
-            String query = "select * from concert_has_ConcertService as c " +
-                    "inner join concertService as cs on c.ConcertService_idConcertService = cs.idConcertService " +
-                    "where Concert_idConcert = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_CONCERT_ID = "SELECT * FROM concert_has_ConcertService AS c " +
+                    "INNER JOIN concertService AS cs ON c.ConcertService_idConcertService = cs.idConcertService " +
+                    "WHERE Concert_idConcert = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_CONCERT_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

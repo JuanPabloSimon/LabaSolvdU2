@@ -5,16 +5,12 @@ import com.solvd.musichall.models.event.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-
 public class TicketService {
     private static final Logger LOGGER = LogManager.getLogger(TicketService.class);
-    private final Connection connection;
     private TicketDAO ticketDAO;
 
-    public TicketService(Connection connection) {
-        this.connection = connection;
-        this.ticketDAO = new TicketDAO(connection);
+    public TicketService() {
+        this.ticketDAO = new TicketDAO();
     }
 
     public Ticket getById(int id) {

@@ -10,19 +10,14 @@ import java.util.ArrayList;
 
 public class PersonDAO extends MySQLDAO implements IPersonDAO {
     private static final Logger LOGGER = LogManager.getLogger(PersonDAO.class);
-    private final Connection connection;
-
-    public PersonDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Person getByID(int id) {
         LOGGER.info(String.format("Searching Person with id: %d", id));
         Person p = null;
-        try {
-            String q = "select * from person where idPerson = ?";
-            PreparedStatement statement = connection.prepareStatement(q);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM person WHERE idPerson = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -43,9 +38,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     @Override
     public Person create(Person person) {
         LOGGER.info(String.format("Creating Person, id: %d", person.getId()));
-        try {
-            String q = "INSERT INTO person (name, lastname, age) VALUES (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO person (name, lastname, age) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getLastname());
@@ -65,9 +60,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     @Override
     public Person update(Person person) {
         LOGGER.info(String.format("Updating person with id: %d", person.getId()));
-        try {
-            String q = "UPDATE person SET name = ?, lastName=?, age = ?, WHERE idPerson= ?";
-            PreparedStatement statement = connection.prepareStatement(q);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE person SET name = ?, lastName=?, age = ?, WHERE idPerson= ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getLastname());
@@ -83,9 +78,9 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting person with id: %d.", id));
-        try {
-            String query = "DELETE FROM persons WHERE idPerson= ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM persons WHERE idPerson= ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
 
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -98,11 +93,11 @@ public class PersonDAO extends MySQLDAO implements IPersonDAO {
     public ArrayList<Person> getAll() {
         LOGGER.info("Finding all Persons.");
         ArrayList<Person> persons = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM person";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM person";
             Statement statement = connection.createStatement();
 
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next())
                 persons.add(new Person(
                         resultSet.getInt("idPerson"),

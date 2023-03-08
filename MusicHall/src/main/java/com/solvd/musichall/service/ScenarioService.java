@@ -11,12 +11,10 @@ import com.solvd.musichall.models.services.CleanService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 public class ScenarioService {
     private static final Logger LOGGER = LogManager.getLogger(ScenarioService.class);
-    private final Connection connection;
     private ScenarioDAO sDAO;
     private MusicHallDAO mDAO;
     private ConcertService cService;
@@ -24,13 +22,12 @@ public class ScenarioService {
     private CleanServiceDAO cleanDAO;
 
 
-    public ScenarioService(Connection connection) {
-        this.connection = connection;
-        this.sDAO = new ScenarioDAO(connection);
-        this.mDAO = new MusicHallDAO(connection);
-        this.cService = new ConcertService(connection);
-        this.seatDAO = new SeatsDAO(connection);
-        this.cleanDAO = new CleanServiceDAO(connection);
+    public ScenarioService() {
+        this.sDAO = new ScenarioDAO();
+        this.mDAO = new MusicHallDAO();
+        this.cService = new ConcertService();
+        this.seatDAO = new SeatsDAO();
+        this.cleanDAO = new CleanServiceDAO();
     }
 
     public Scenario getScenarioById(int id) {

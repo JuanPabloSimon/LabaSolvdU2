@@ -11,21 +11,16 @@ import java.util.ArrayList;
 
 public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     private static final Logger LOGGER = LogManager.getLogger(MusicianDAO.class);
-    private final Connection connection;
-
-    public MusicianDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Musician getByID(int id) {
         LOGGER.info(String.format("Searching Musician with id: %d", id));
         Musician m = null;
-        try {
-            String query = "select * from musician " +
-                    "inner join person on musician.Person_idPerson = person.idPerson " +
-                    "where idMusician = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String GET_BY_ID = "SELECT * FROM musician " +
+                    "INNER JOIN person ON musician.Person_idPerson = person.idPerson " +
+                    "WHERE idMusician = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -51,9 +46,9 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
 
     public Musician create(Musician musician, Band band) {
         LOGGER.info("Creating musician");
-        try {
-            String query = "insert into musician (Person_idPerson, Band_idBand, role) values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String CREATE = "INSERT INTO musician (Person_idPerson, Band_idBand, role) VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, musician.getId());
             statement.setInt(2, band.getBandID());
             statement.setString(2, musician.getRole());
@@ -72,9 +67,9 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     @Override
     public Musician update(Musician musician) {
         LOGGER.info(String.format("Updating Employee with id: %d", musician.getMusicianId()));
-        try {
-            String query = "update musician set role= ?, Person_idPerson = ? where idMusician = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String UPDATE = "UPDATE musician SET role= ?, Person_idPerson = ? WHERE idMusician = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, musician.getRole());
             statement.setInt(2, musician.getId());
             statement.setInt(3, musician.getMusicianId());
@@ -88,9 +83,9 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting musician with id: %d", id));
-        try {
-            String query = "delete from musician where idMusician = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String DELETE_BY_ID = "DELETE FROM musician WHERE idMusician = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -102,10 +97,10 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     public ArrayList<Musician> getAll() {
         LOGGER.info("Getting all musicians");
         ArrayList<Musician> musicians = new ArrayList<Musician>();
-        try {
-            String query = "select * from musician";
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String GET_ALL = "SELECT * FROM musician";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 musicians.add(new Musician(
                         resultSet.getInt("idMusician"),
@@ -126,11 +121,11 @@ public class MusicianDAO extends MySQLDAO implements IMusicianDAO {
     public ArrayList<Musician> getMusiciansByBandId(int id) {
         LOGGER.info(String.format("Searching Musician by BandId: %d", id));
         ArrayList<Musician> musicians = new ArrayList<>();
-        try {
-            String query = "select * from musician " +
-                    "inner join person on musician.Person_idPerson = person.idPerson " +
-                    "where Bands_idBands = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_MUSICIAN_ID = "SELECT * FROM musician " +
+                    "INNER JOIN person ON musician.Person_idPerson = person.idPerson " +
+                    "WHERE Bands_idBands = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_MUSICIAN_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

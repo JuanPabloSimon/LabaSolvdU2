@@ -12,21 +12,16 @@ import java.util.List;
 
 public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
     private static final Logger LOGGER = LogManager.getLogger(EmployeeDAO.class);
-    private final Connection connection;
-
-    public EmployeeDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Employee getByID(int id) {
         LOGGER.info(String.format("Searching Employee with id: %d", id));
         Employee em = null;
-        try {
-            String query = "select * from employees \n" +
-                    "inner Join person on employees.Person_idPerson = Person.idPerson \n" +
-                    "where employees.idEmployees= ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM employees " +
+                    "INNER JOIN person ON employees.Person_idPerson = Person.idPerson " +
+                    "WHERE employees.idEmployees= ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -52,10 +47,10 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
 
     public Employee create(Employee employee, MusicHall musicHall) {
         LOGGER.info("Creating Employee");
-        try {
-            String query = "Insert into employees (role, Person_idPerson, MusicHall_idMusicHall) " +
-                    "values (?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO employees (role, Person_idPerson, MusicHall_idMusicHall) " +
+                    "VALUES (?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, employee.getRole());
             statement.setInt(2, employee.getId());
@@ -75,9 +70,9 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
     @Override
     public Employee update(Employee employee) {
         LOGGER.info(String.format("Updating Employee with id: %d", employee.getEmployeeID()));
-        try {
-            String query = "Update Employees set role = ?, Person_idPerson = ? where idEmployees = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE Employees SET role = ?, Person_idPerson = ? WHERE idEmployees = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, employee.getRole());
             statement.setInt(2, employee.getId());
             statement.setInt(3, employee.getEmployeeID());
@@ -91,9 +86,9 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting employee with id: %d", id));
-        try {
-            String query = "Delete from employees where idEmployees= ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM employees WHERE idEmployees= ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -105,10 +100,10 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
     public List<Employee> getAll() {
         LOGGER.info("Getting all employees");
         ArrayList<Employee> employees = new ArrayList<Employee>();
-        try {
-            String query = "select * from employees inner Join person on employees.Person_idPerson = person.idPerson ";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM employees INNER JOIN person ON employees.Person_idPerson = person.idPerson ";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
 
             while (resultSet.next()) {
                 employees.add(new Employee(
@@ -130,9 +125,9 @@ public class EmployeeDAO extends MySQLDAO implements IEmployeeDAO {
     public ArrayList<Employee> getEmployeeByMusicHallId(int id) {
         LOGGER.info(String.format("Searching Employee by MusicHallID: %d", id));
         ArrayList<Employee> employees = new ArrayList<Employee>();
-        try {
-            String query = "select * from employees inner Join person on employees.Person_idPerson = person.idPerson where MusicHall_idMusicHall = =";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_MUSICHALL_ID = "SELECT * FROM employees INNER JOIN person ON employees.Person_idPerson = person.idPerson WHERE MusicHall_idMusicHall = =";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_MUSICHALL_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 

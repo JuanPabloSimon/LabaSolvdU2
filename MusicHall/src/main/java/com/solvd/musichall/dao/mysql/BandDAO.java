@@ -10,20 +10,14 @@ import java.util.ArrayList;
 
 public class BandDAO extends MySQLDAO implements IBandDAO {
     private static final Logger LOGGER = LogManager.getLogger(BandDAO.class);
-    private final Connection connection;
-
-    public BandDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Band getByID(int id) {
         LOGGER.info(String.format("Searching Band with id: %d", id));
         Band b = null;
-        try {
-            String query = "select * from bands where idBands = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM bands WHERE idBands = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -43,9 +37,9 @@ public class BandDAO extends MySQLDAO implements IBandDAO {
     @Override
     public Band create(Band band) {
         LOGGER.info(String.format("Creating Band, name: %s", band.getName()));
-        try {
-            String query = "insert into bands (name, membersAmount, genre) values (?, ?, ?) ";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String CREATE = "INSERT INTO bands (name, membersAmount, genre) VALUES (?, ?, ?) ";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, band.getName());
             statement.setInt(2, band.getMembersAmount());
             statement.setString(3, band.getGenre());
@@ -64,9 +58,9 @@ public class BandDAO extends MySQLDAO implements IBandDAO {
     @Override
     public Band update(Band band) {
         LOGGER.info(String.format("Updating Employee with id: %d", band.getBandID()));
-        try {
-            String query = "update bands set name = ?, membersAmouny = ?, genre = ? where idBands = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String UPDATE = "UPDATE bands SET name = ?, membersAmouny = ?, genre = ? WHERE idBands = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, band.getName());
             statement.setInt(2, band.getMembersAmount());
             statement.setString(3, band.getGenre());
@@ -81,9 +75,9 @@ public class BandDAO extends MySQLDAO implements IBandDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting band with id: %d", id));
-        try {
-            String query = "Delete from bands where idBands = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String DELETE_BY_ID = "DELETE FROM bands WHERE idBands = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -95,10 +89,10 @@ public class BandDAO extends MySQLDAO implements IBandDAO {
     public ArrayList<Band> getAll() {
         LOGGER.info("Getting all bands");
         ArrayList<Band> bands = new ArrayList<Band>();
-        try {
-            String query = "Select * from bands";
+        try (Connection connection = MySQLDAO.getConnection()) {
+            String GET_ALL = "SELECT * FROM bands";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 bands.add(new Band(
                         resultSet.getInt("idBands"),

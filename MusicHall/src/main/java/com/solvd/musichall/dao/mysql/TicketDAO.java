@@ -14,22 +14,17 @@ import java.util.List;
 
 public class TicketDAO extends MySQLDAO implements ITicketDAO {
     private static final Logger LOGGER = LogManager.getLogger(TicketDAO.class);
-    private final Connection connection;
-
-    public TicketDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Ticket getByID(int id) {
         LOGGER.info(String.format("Searching Ticket with id: %d", id));
         Ticket t = null;
-        try {
-            String query = "select * from tickets as t " +
-                    "inner join person as p on t.Person_idPerson = p.idPerson " +
-                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
-                    "where idTickets = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM tickets AS t " +
+                    "INNER JOIN person AS p ON t.Person_idPerson = p.idPerson " +
+                    "INNER JOIN seats AS s ON t.Seats_idSeats = s.idSeats " +
+                    "WHEREidTickets = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -63,9 +58,9 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
 
     public Ticket create(Ticket ticket, Concert concert) {
         LOGGER.info("Creating Ticket");
-        try {
-            String query = "insert into tickets (value, Concert_idConcert, Person_idPerson, Seats_idSeats) values (?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSERT INTO tickets (value, Concert_idConcert, Person_idPerson, Seats_idSeats) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setFloat(1, ticket.getValue());
             statement.setInt(2, concert.getConcertID());
             statement.setInt(2, ticket.getPerson().getId());
@@ -85,9 +80,9 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
     @Override
     public Ticket update(Ticket ticket) {
         LOGGER.info(String.format("Updating Ticket with id: %d", ticket.getTicketID()));
-        try {
-            String query = "update tickets set value= ?, Person_idPerson = ?, Seats_idSeats = ? where idTickets = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE tickets SET value= ?, Person_idPerson = ?, Seats_idSeats = ? WHERE idTickets = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setFloat(1, ticket.getValue());
             statement.setInt(2, ticket.getPerson().getId());
             statement.setInt(3, ticket.getSeat().getSeatID());
@@ -102,9 +97,9 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting ticket with id: %d", id));
-        try {
-            String query = "delete from tickets where idTickets = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM tickets WHERE idTickets = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -116,12 +111,12 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
     public List<Ticket> getAll() {
         LOGGER.info("Getting all tickets");
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-        try {
-            String query = "select * from tickets as t " +
-                    "inner join person as p on t.Person_idPerson = p.idPerson " +
-                    "inner join seats as s on t.Seats_idSeats = s.idSeats";
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_ALL = "SELECT * FROM tickets AS t " +
+                    "INNER JOIN person AS p ON t.Person_idPerson = p.idPerson " +
+                    "INNER JOIN seats AS s ON t.Seats_idSeats = s.idSeats";
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 tickets.add(new Ticket(
                         resultSet.getInt("idTickets"),
@@ -150,12 +145,12 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
     public ArrayList<Ticket> getTicketsByConcertId(int id) {
         LOGGER.info(String.format("Searching Ticket by concertId: %d", id));
         ArrayList<Ticket> tickets = new ArrayList<>();
-        try {
-            String query = "select * from tickets as t " +
-                    "inner join person as p on t.Person_idPerson = p.idPerson " +
-                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
-                    "where Concert_idConcert = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_CONCERT_ID = "SELECT * FROM tickets AS t " +
+                    "INNER JOIN person AS p ON t.Person_idPerson = p.idPerson " +
+                    "INNER JOIN seats AS s ON t.Seats_idSeats = s.idSeats " +
+                    "WHERE Concert_idConcert = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_CONCERT_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -186,12 +181,12 @@ public class TicketDAO extends MySQLDAO implements ITicketDAO {
     public Ticket getTicketByPersonId(int id) {
         LOGGER.info(String.format("Searching Musician by BandId: %d", id));
         Ticket t = null;
-        try {
-            String query = "select * from tickets as t " +
-                    "inner join person as p on t.Person_idPerson = p.idPerson " +
-                    "inner join seats as s on t.Seats_idSeats = s.idSeats " +
-                    "where Person_idPerson = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_PERSON_ID = "SELECT * FROM tickets AS t " +
+                    "INNER JOIN person AS p ON t.Person_idPerson = p.idPerson " +
+                    "INNER JOIN seats AS s ON t.Seats_idSeats = s.idSeats " +
+                    "WHERE Person_idPerson = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_PERSON_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

@@ -9,14 +9,12 @@ import com.solvd.musichall.models.musicHall.Scenario;
 import com.solvd.musichall.models.musicHall.Seat;
 import com.solvd.musichall.models.people.Musician;
 import com.solvd.musichall.models.people.Person;
+import com.solvd.musichall.models.services.ConcertService;
 import com.solvd.musichall.service.BandService;
-import com.solvd.musichall.service.ConcertService;
 import com.solvd.musichall.service.ScenarioService;
-import com.solvd.musichall.utils.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -26,11 +24,9 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         LOGGER.info("Starting program.");
-        Connection c = ConnectionPool.getInstance().getConnection();
-
 
         // BAND TEST
-        BandService bandService = new BandService(c);
+        BandService bandService = new BandService();
 
         /* Select */
 
@@ -55,9 +51,9 @@ public class Main {
 
 
         // SCENARIO TEST
-        ScenarioService scenarioService = new ScenarioService(c);
+        ScenarioService scenarioService = new ScenarioService();
         Scenario scenario = scenarioService.getScenarioById(1);
-        LOGGER.info("Scenario with id 2" + scenario);
+        LOGGER.info("Scenario with id 1" + scenario);
         LOGGER.info("-------------------");
 
 
@@ -67,8 +63,8 @@ public class Main {
 
         Date date = new Date();
         Concert concert = new Concert(120, date, band);
-        ConcertServicesDAO concertServicesDAO = new ConcertServicesDAO(c);
-        List<com.solvd.musichall.models.services.ConcertService> services = concertServicesDAO.getAll();
+        ConcertServicesDAO concertServicesDAO = new ConcertServicesDAO();
+        List<ConcertService> services = concertServicesDAO.getAll();
         for (com.solvd.musichall.models.services.ConcertService s : services) {
             concert.addService(s);
         }
@@ -86,7 +82,7 @@ public class Main {
         concert.addTicket(t2);
         concert.addTicket(t3);
 
-        ConcertService concertService = new ConcertService(c);
+        com.solvd.musichall.service.ConcertService concertService = new com.solvd.musichall.service.ConcertService();
 
         LOGGER.info("Create Concert: " + concertService.create(concert, scenario));
         LOGGER.info("-------------------");

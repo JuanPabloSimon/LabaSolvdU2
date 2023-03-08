@@ -9,24 +9,21 @@ import com.solvd.musichall.models.musicHall.Scenario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConcertService {
     private static final Logger LOGGER = LogManager.getLogger(ConcertService.class);
-    private final Connection connection;
     private ConcertDAO concertDAO;
     private BandService bandService;
     private TicketDAO ticketDAO;
     private ConcertServicesDAO concertServicesDAO;
 
-    public ConcertService(Connection connection) {
-        this.connection = connection;
-        this.concertDAO = new ConcertDAO(connection);
-        this.bandService = new BandService(connection);
-        this.ticketDAO = new TicketDAO(connection);
-        this.concertServicesDAO = new ConcertServicesDAO(connection);
+    public ConcertService() {
+        this.concertDAO = new ConcertDAO();
+        this.bandService = new BandService();
+        this.ticketDAO = new TicketDAO();
+        this.concertServicesDAO = new ConcertServicesDAO();
     }
 
     public Concert getById(int id) {

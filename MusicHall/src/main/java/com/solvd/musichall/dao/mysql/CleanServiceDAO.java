@@ -11,20 +11,14 @@ import java.util.List;
 
 public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     private static final Logger LOGGER = LogManager.getLogger(CleanServiceDAO.class);
-    private final Connection connection;
-
-    public CleanServiceDAO(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public CleanService getByID(int id) {
         LOGGER.info(String.format("Searching ConcertService with id: %d", id));
         CleanService c = null;
-        try {
-            String query = "select * from cleanService where idCleanService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_ID = "SELECT * FROM cleanService WHERE idCleanService = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -45,9 +39,9 @@ public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     @Override
     public CleanService create(CleanService cleanService) {
         LOGGER.info(String.format("Creating Cleaning Service, name: %s", cleanService.getName()));
-        try {
-            String query = "insert into cleanService (name, type, time, price) values (?, ?, ?, ?) ";
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String CREATE = "INSER INTO cleanService (name, type, time, price) VALUES (?, ?, ?, ?) ";
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, cleanService.getName());
             statement.setString(2, cleanService.getType());
             statement.setFloat(3, cleanService.getTime());
@@ -67,9 +61,9 @@ public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     @Override
     public CleanService update(CleanService cleanService) {
         LOGGER.info(String.format("Updating Clean Service with id: %d", cleanService.getCleanServiceID()));
-        try {
-            String query = "update cleanService set name = ?, type = ?, time = ?, price = ?  where idCleanService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String UPDATE = "UPDATE cleanService SET name = ?, type = ?, time = ?, price = ?  WHERE idCleanService = ?";
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, cleanService.getName());
             statement.setString(2, cleanService.getType());
             statement.setFloat(3, cleanService.getTime());
@@ -84,9 +78,9 @@ public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     @Override
     public void deleteByID(int id) {
         LOGGER.info(String.format("Deleting clean service with id: %d", id));
-        try {
-            String query = "Delete from cleanService where idCleanService = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String DELETE_BY_ID = "DELETE FROM cleanService WHERE idCleanService = ?";
+            PreparedStatement statement = connection.prepareStatement(DELETE_BY_ID);
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -98,10 +92,10 @@ public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     public List<CleanService> getAll() {
         LOGGER.info("Getting all Cleaning Services");
         ArrayList<CleanService> cleanServices = new ArrayList<>();
-        try {
-            String query = "Select * from cleanService";
+        try (Connection connection = MySQLDAO.getConnection();) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            String GET_ALL = "SELECT * FROM cleanService";
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
                 cleanServices.add(new CleanService(
                         resultSet.getInt("idCleanService"),
@@ -121,11 +115,11 @@ public class CleanServiceDAO extends MySQLDAO implements ICleanServiceDAO {
     public ArrayList<CleanService> getCleanServicesByScenarioID(int id) {
         LOGGER.info(String.format("Getting all cleaning services by scenario id: %d", id));
         ArrayList<CleanService> cleanServices = new ArrayList<>();
-        try {
-            String query = "select * from cleaningScenario as c " +
-                    "inner join cleanService as cs on c.CleanService_idCleanService = cs.idCleanService " +
-                    "where ScenarioRoom_idScenario = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = MySQLDAO.getConnection();) {
+            String GET_BY_SCENARIO_ID = "SELECT * FROM cleaningScenario AS c " +
+                    "INNER JOIN cleanService AS cs ON c.CleanService_idCleanService = cs.idCleanService " +
+                    "WHERE ScenarioRoom_idScenario = ?";
+            PreparedStatement statement = connection.prepareStatement(GET_BY_SCENARIO_ID);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
